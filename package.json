@@ -1,0 +1,19 @@
+{
+  "name": "land-transfer-blockchain-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/somenath1435/Land-Transfer-Blockchain-System.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/somenath1435/Land-Transfer-Blockchain-System/issues"
+  },
+  "homepage": "https://github.com/somenath1435/Land-Transfer-Blockchain-System#readme"
+}
