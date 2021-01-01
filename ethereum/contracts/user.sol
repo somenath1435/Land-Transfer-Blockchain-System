@@ -1,0 +1,76 @@
+pragma solidity ^0.4.19;
+
+contract UserManager {
+    
+    uint public usercount=0;
+    mapping (address  => bool) checker;
+    mapping (address => address) usermanagermap;
+    address private storeaddress;
+    
+    function registeruser (
+        string memory firstname ,
+        string memory lastname ,
+        uint phone ,
+        uint aadhar,
+        address eth, 
+        uint bank) 
+        public  
+    {
+     require(eth == msg.sender);
+     require(!checker[msg.sender]);
+     
+     User newuser = new User(firstname,lastname,phone,aadhar,eth,bank);
+     checker[msg.sender]=true;
+     storeaddress=address(newuser);
+     usermanagermap[msg.sender]=storeaddress;
+     usercount++;
+    }
+    
+    function getstoreaddress (address eth) public view returns (address){
+        
+        require(eth == msg.sender);
+        
+        return usermanagermap[eth];
+    }
+    
+    
+}
+
+contract User {
+    
+    //This is the unique id for each user 
+    address  public id ;
+    uint public phonenum;
+    uint public aadharnum;
+    uint public banknum;
+    string public firstname;
+    string public lastname;
+   
+    
+    constructor 
+    (
+        string memory firnam, 
+        string memory lasnam, 
+        uint phone, 
+        uint aadhar,
+        address eth, 
+        uint bank) public
+    {
+        phonenum=phone;
+        aadhar= aadharnum;
+        banknum= bank;
+        id= eth;
+        firstname= firnam;
+        lastname= lasnam;
+        
+        
+    }
+    
+    function showdetails() public view returns
+    (
+        string memory,string memory,uint,uint ,address,uint
+    )
+    {
+        return(firstname,lastname,phonenum,aadharnum,id,banknum);
+    }
+}
