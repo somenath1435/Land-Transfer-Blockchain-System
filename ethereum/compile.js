@@ -9,10 +9,8 @@ const userPath = path.resolve(__dirname, 'contracts', 'user.sol');
 const source = fs.readFileSync(userPath, 'utf8');
 const output = solc.compile(source, 1).contracts;
 
-
 fs.ensureDirSync(buildPath);
 
-console.log(output);
 
 for (let contract in output) {
   fs.outputJsonSync(

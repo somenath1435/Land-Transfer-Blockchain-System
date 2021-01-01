@@ -5,11 +5,11 @@ contract UserManager {
     uint public usercount=0;
     mapping (address  => bool) checker;
     mapping (address => address) usermanagermap;
-    address private storeaddress;
+    address public storeaddress;
     
     function registeruser (
-        string memory firstname ,
-        string memory lastname ,
+        string  firstname ,
+        string  lastname ,
         uint phone ,
         uint aadhar,
         address eth, 
@@ -47,10 +47,10 @@ contract User {
     string public lastname;
    
     
-    constructor 
+    function User
     (
-        string memory firnam, 
-        string memory lasnam, 
+        string  firnam, 
+        string lasnam, 
         uint phone, 
         uint aadhar,
         address eth, 
@@ -68,7 +68,7 @@ contract User {
     
     function showdetails() public view returns
     (
-        string memory,string memory,uint,uint ,address,uint
+        string ,string ,uint,uint ,address,uint
     )
     {
         return(firstname,lastname,phonenum,aadharnum,id,banknum);
