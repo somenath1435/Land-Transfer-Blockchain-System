@@ -6,7 +6,9 @@ contract UserManager {
     mapping (address  => bool) checker;
     mapping (address => address) usermanagermap;
     address public storeaddress;
-    
+      function cntuser () public view returns (uint) {
+        return usercount;
+    }
     function registeruser (
         string  firstname ,
         string  lastname ,
