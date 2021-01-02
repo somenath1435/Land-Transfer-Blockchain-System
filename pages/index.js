@@ -7,12 +7,12 @@ class HomePage extends Component {
 
   static async getInitialProps() {
     const campaigns = await factory.methods.cntuser().call();
-    console.log(campaigns);
+    //console.log(campaigns);
     console.log("1234");
     return { campaigns };
   }
   render() {
-    /*return (
+    return (
       <Layout>
         <div>
           <h3>Open Campaigns</h3>
@@ -29,11 +29,11 @@ class HomePage extends Component {
           </Link>
 
           <h1>Some data will be updated here</h1>
+          {this.props.campaigns}
         </div>
       </Layout>
       
-    );*/
-    return <div>{this.props.campaigns}</div>;
+    );
   }
 }
 

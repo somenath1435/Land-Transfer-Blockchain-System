@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Card } from "semantic-ui-react";
 import Layout from "../../components/layoutlogout";
-
+import User1 from '../../ethereum/user1';
 class UserDetails extends Component {
   static async getInitialProps(props) {
     //call api
 
-    const { address } = props.query;
-    return { address };
+    const user1= User1(props.query.address);
+    //const summary = await user1.methods.showdetails().call();
+    console.log(props.query.address);
+    return { };
   }
 
   renderCampaigns() {
