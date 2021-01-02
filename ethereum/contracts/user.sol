@@ -3,12 +3,10 @@ pragma solidity ^0.4.19;
 contract UserManager {
     
     uint public usercount=0;
-    mapping (address  => bool) checker;
-    mapping (address => address) usermanagermap;
+    mapping (address  => bool) public checker;
+    mapping (address => address)public usermanagermap;
     address public storeaddress;
-      function cntuser () public view returns (uint) {
-        return usercount;
-    }
+    
     function registeruser (
         string  firstname ,
         string  lastname ,
@@ -18,7 +16,7 @@ contract UserManager {
         uint bank) 
         public  
     {
-     require(eth == msg.sender);
+     //require(eth == msg.sender);
      require(!checker[msg.sender]);
      
      User newuser = new User(firstname,lastname,phone,aadhar,eth,bank);
@@ -30,7 +28,7 @@ contract UserManager {
     
     function getstoreaddress (address eth) public view returns (address){
         
-        require(eth == msg.sender);
+        //require(eth == msg.sender);
         
         return usermanagermap[eth];
     }
