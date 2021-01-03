@@ -10,7 +10,7 @@ export default () => {
       </Link>
 
       <Menu.Menu position="right">
-        <Link route="/" replace="true">
+        <Link route="/" replace={true}>
           <a className="item">Logout</a>
         </Link>
       </Menu.Menu>
