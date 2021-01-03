@@ -4,20 +4,22 @@ import Layout from "../../components/layoutlogout";
 import User1 from '../../ethereum/user1';
 import factory from '../../ethereum/factory'
 class UserDetails extends Component {
+
   static async getInitialProps(props) {
     //call api
-
-    
-    return { };
+    const add=props.query.address;
+    return { add};
   }
 
   async componentDidMount() {
 
-    const add = await factory.methods.getstoreaddress(props.query.address).call();
-    const user1= User1(add);
-    //const summary = await user1.methods.showdetails().call();
-    console.log(add);
-
+    const addr = await factory.methods.getstoreaddress(this.props.add).call();
+    
+    console.log(addr);
+    console.log("1234");
+    const user1= User1(addr);
+    const summary = await user1.methods.showdetails().call();
+    console.log(summary);
   }
 
   renderCampaigns() {
