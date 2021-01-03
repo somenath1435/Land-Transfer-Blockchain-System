@@ -24,8 +24,8 @@ class HomePage extends Component {
   /*async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
     console.log("123454");
-     /*await factory.methods.registeruser(
-       "som","asd",123,1234,"0x2Ebc36ec812349B37ae073d2Bc5E256773A436A2",1234)
+     await factory.methods.registeruser(
+       "som","asd",123,1234,"0xBE558BAB78ca948cBCf99523Ec4154635a09A56F",1234)
        .send({
          from: accounts[0]
        }
@@ -37,7 +37,7 @@ class HomePage extends Component {
      console.log(cnt1);
     return {};
   }*/
-  
+
   render() {
     return (
       <Layout>

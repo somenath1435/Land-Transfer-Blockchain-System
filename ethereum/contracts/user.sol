@@ -16,7 +16,7 @@ contract UserManager {
         uint bank) 
         public  
     {
-     //require(eth == msg.sender);
+     require(eth == msg.sender);
      require(!checker[msg.sender]);
      
      User newuser = new User(firstname,lastname,phone,aadhar,eth,bank);

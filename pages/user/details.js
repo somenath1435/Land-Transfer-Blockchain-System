@@ -2,14 +2,22 @@ import React, { Component } from "react";
 import { Card } from "semantic-ui-react";
 import Layout from "../../components/layoutlogout";
 import User1 from '../../ethereum/user1';
+import factory from '../../ethereum/factory'
 class UserDetails extends Component {
   static async getInitialProps(props) {
     //call api
 
-    const user1= User1(props.query.address);
-    //const summary = await user1.methods.showdetails().call();
-    console.log(props.query.address);
+    
     return { };
+  }
+
+  async componentDidMount() {
+
+    const add = await factory.methods.getstoreaddress(props.query.address).call();
+    const user1= User1(add);
+    //const summary = await user1.methods.showdetails().call();
+    console.log(add);
+
   }
 
   renderCampaigns() {
