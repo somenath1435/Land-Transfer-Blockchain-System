@@ -5,10 +5,19 @@ import User1 from '../../ethereum/user1';
 import factory from '../../ethereum/factory'
 class UserDetails extends Component {
 
+  state={
+    fname:"",
+    lname:"",
+    phone:"",
+    adhaar:"",
+    bankcif:"",
+    eth:""
+  }
+
   static async getInitialProps(props) {
     //call api
     const add=props.query.address;
-    return { add};
+    return { add };
   }
 
   async componentDidMount() {
@@ -20,6 +29,8 @@ class UserDetails extends Component {
     const user1= User1(addr);
     const summary = await user1.methods.showdetails().call();
     console.log(summary);
+    console.log(summary[0]);
+    this.setState({fname:summary[0],lname:summary[1],phone:summary[2],adhaar:summary[3],eth:summary[4],bankcif:summary[5]});
   }
 
   renderCampaigns() {
@@ -27,23 +38,23 @@ class UserDetails extends Component {
     const items = [
       {
         header: "First Name",
-        description: "Somenath",
+        description: this.state.fname,
       },
       {
         header: "Last Name",
-        description: "Sarkar",
+        description: this.state.lname,
       },
       {
         header: "Phone Number",
-        description: "999999999",
+        description: this.state.phone,
       },
       {
         header: "Adhaar Number",
-        description: "12345678",
+        description: this.state.adhaar,
       },
       {
         header: "Bank CIF",
-        description: "CIF12345",
+        description: this.state.bankcif,
       },
     ];
 
@@ -54,7 +65,7 @@ class UserDetails extends Component {
     return (
       <Layout>
         <div>
-          <h3>User Details for address {this.props.address}</h3>
+          <h3>User Details for address {this.props.add}</h3>
 
           {this.renderCampaigns()}
         </div>
