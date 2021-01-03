@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Card, Message } from "semantic-ui-react";
 import Layout from "../../components/layoutlogout";
-import User1 from '../../ethereum/user1';
-import factory from '../../ethereum/factory'
+import User1 from '../../ethereum/userinstance';
+import factory from '../../ethereum/factory_user'
 class UserDetails extends Component {
 
   state={

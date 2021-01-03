@@ -3,7 +3,7 @@ import { Card, Button } from "semantic-ui-react";
 import Layout from "../components/Layout";
 import { Link } from "../routes";
 import web3 from "../ethereum/web3";
-import factory from "../ethereum/factory";
+import factory from "../ethereum/factory_user";
 
 class HomePage extends Component {
 

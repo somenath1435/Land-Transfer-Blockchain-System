@@ -1,6 +1,6 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
-const compiledFactory = require('./build/UserManager.json');
+const compiledFactory = require('./build_user/UserManager.json');
 
 const provider = new HDWalletProvider(
   'model basic scene left push agree summer fuel corn daughter boy inflict',
