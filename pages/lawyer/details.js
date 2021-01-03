@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Card, Button } from "semantic-ui-react";
 import Layout from "../../components/layoutlogout";
 import { Link } from "../../routes";
-
+import Lawyer from '../../ethereum/lawyerinstance';
+import factory from '../../ethereum/factory_lawyer';
 class LawyerDetails extends Component {
   static async getInitialProps(props) {
     //call api
@@ -10,7 +11,15 @@ class LawyerDetails extends Component {
     const { address } = props.query;
     return { address };
   }
-
+  /*async componentDidMount() {
+    const addr = await factory.methods.getstoreaddress(this.props.address).call();
+      const list= await factory .methods.lawyeraddress(0).call();
+      console.log(list);
+      console.log(addr);
+      const lawyer= Lawyer(addr);
+      const summary = await lawyer.methods.showdetails().call();
+      console.log(summary);
+  }*/
   renderCampaigns() {
     //replace data here
     const items = [
