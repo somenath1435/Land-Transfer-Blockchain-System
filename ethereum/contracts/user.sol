@@ -57,7 +57,7 @@ contract User {
         uint bank) public
     {
         phonenum=phone;
-        aadhar= aadharnum;
+        aadharnum= aadhar;
         banknum= bank;
         id= eth;
         firstname= firnam;
