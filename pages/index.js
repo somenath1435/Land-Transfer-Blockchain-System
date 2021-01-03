@@ -2,8 +2,16 @@ import React, { Component } from "react";
 import { Card, Button } from "semantic-ui-react";
 import Layout from "../components/Layout";
 import { Link } from "../routes";
+import web3 from "../ethereum/web3";
+import factory from "../ethereum/factory";
 
 class HomePage extends Component {
+
+  
+
+
+  
+
   render() {
     return (
       <Layout>
@@ -22,8 +30,10 @@ class HomePage extends Component {
           </Link>
 
           <h1>Some data will be updated here</h1>
+          {this.props.campaigns}
         </div>
       </Layout>
+      
     );
   }
 }
