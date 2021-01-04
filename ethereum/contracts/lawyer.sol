@@ -71,4 +71,101 @@ contract Lawyer {
     {
         return(firstname,lastname,phonenum,id,govid);
     }
+    
+     struct Requestdetails {
+        address buyerid;
+        address sellerid;
+        uint landid;
+        address lawyerid;
+        address registryofficerid;
+        address blroid;
+        string registryofficerstatus;
+        string blrostatus;
+        
+        uint buyerposition;
+        uint sellerposition;
+        bool ispending;
+    }
+    
+     Requestdetails [] requests;
+    
+    uint public requestcount=0;
+    
+     function createrequest
+    (
+        address buyid,
+        address sellid,
+        uint lanid,
+        address lawid,
+        
+        uint buyerposition,
+        uint sellerposition
+    ) 
+    public 
+    {
+        Requestdetails memory newrequest =  Requestdetails({
+           buyerid: buyid,
+           sellerid: sellid,
+           landid: lanid,
+           lawyerid: lawid,
+           registryofficerstatus: "Pending",
+           blrostatus: "Nil",
+           registryofficerid: buyid,
+           blroid: buyid,
+           buyerposition: buyerposition,
+           sellerposition: sellerposition,
+           ispending: false
+           
+           
+           } );
+           requestcount++;
+           
+           //requests.push(newrequest);
+    }
+    
+     function changestatusbyregistryofficer
+    (
+        address lawyer,
+        address officerid,
+        uint position,
+        string newstatus,
+        address blroid
+    )
+    public
+    {
+        //require(position < requestcount);
+        
+        // require(lawid == requests[position].lawyerid);
+        
+        //require(requests[position].registryofficerid == officerid)
+        
+        //require(msg.sender == officerid);
+        
+        requests[position].registryofficerstatus = newstatus;
+        requests[position].blroid = blroid;
+    }
+    
+    
+    function changestatusbyblro
+    (
+        address lawid,
+        address officerid,
+        address blroid,
+        uint position,
+        string newstatus
+    )
+    public
+    {
+        //require(position < requestcount);
+        
+        // require(lawid == requests[position].lawyerid);
+        
+        //require(requests[position].registryofficerid == officerid)
+        
+        //require(requests[position].blroid == blroid)
+        
+        //require(msg.sender == blroid);
+        
+        requests[position].blrostatus = newstatus;
+    }
 }
