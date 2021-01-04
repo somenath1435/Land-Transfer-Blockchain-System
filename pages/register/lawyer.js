@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Card, Button, Form, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
-import { Link } from "../../routes";
+import { Link, Router } from "../../routes";
+import web3 from "../../ethereum/web3";
+import factory from "../../ethereum/factory_lawyer"
 
 class Lawyer extends Component {
   state = {
@@ -26,6 +28,14 @@ class Lawyer extends Component {
       console.log(this.state.phone);
       console.log(this.state.ethaddress);
       console.log(this.state.govtid);
+
+      const accounts = await web3.eth.getAccounts();
+      console.log("accounts[0] is "+accounts[0]);
+      const st=this.state;
+      await factory.methods.registerlawyer(st.firstname,st.lastname,st.phone,st.ethaddress,st.govtid)
+      .send({from: accounts[0]}); 
+
+      Router.replaceRoute(`/lawyer/${this.state.ethaddress}`);
       // Router.replaceRoute(`/campaigns/${this.props.address}`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
