@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { Card, Message } from "semantic-ui-react";
+import { Card, Message, Button } from "semantic-ui-react";
 import Layout from "../../components/layoutlogout";
 import User1 from '../../ethereum/userinstance';
 import factory from '../../ethereum/factory_user'
+import { Link } from "../../routes";
+
 class UserDetails extends Component {
 
   state={
@@ -75,6 +77,27 @@ class UserDetails extends Component {
           {this.renderCampaigns()}
 
           {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
+
+          <br/><br/>
+          <Link route={`/user/${this.props.add}/showlawyers`}>
+            <a>
+              <Button content="See All Lawyers" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
+          <Link route={`/user/${this.props.add}/allrequest`}>
+            <a>
+              <Button content="See All Requests" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
+          <Link route={`/user/${this.props.add}/newrequest`}>
+            <a>
+              <Button content="Make New Request" primary />
+            </a>
+          </Link>
         </div>
       </Layout>
     );
