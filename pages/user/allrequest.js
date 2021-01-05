@@ -5,7 +5,6 @@ import { Link, Router } from "../../routes";
 import web3 from "../../ethereum/web3";
 import factory from "../../ethereum/factory_user";
 import User from "../../ethereum/userinstance";
-import head from "next/dist/lib/head";
 
 class AllRequest extends Component {
   state = {
