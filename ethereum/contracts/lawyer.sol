@@ -79,15 +79,15 @@ contract Lawyer {
         address lawyerid;
         address registryofficerid;
         address blroid;
+        string lawyerstatus;
         string registryofficerstatus;
         string blrostatus;
-        
         uint buyerposition;
         uint sellerposition;
-        bool ispending;
+        uint ispending;
     }
     
-     Requestdetails [] requests;
+     Requestdetails [] public requests;
     
     uint public requestcount=0;
     
@@ -97,9 +97,8 @@ contract Lawyer {
         address sellid,
         uint lanid,
         address lawid,
-        
-        uint buyerposition,
-        uint sellerposition
+        uint buyerpos,
+        uint sellerpos
     ) 
     public 
     {
@@ -108,19 +107,18 @@ contract Lawyer {
            sellerid: sellid,
            landid: lanid,
            lawyerid: lawid,
+           lawyerstatus: "Pending",
            registryofficerstatus: "Pending",
            blrostatus: "Nil",
-           registryofficerid: buyid,
-           blroid: buyid,
-           buyerposition: buyerposition,
-           sellerposition: sellerposition,
-           ispending: false
-           
-           
+           registryofficerid: 0x0000000000000000000000000000000000000000,
+           blroid: 0x0000000000000000000000000000000000000000,
+           buyerposition: buyerpos,
+           sellerposition: sellerpos,
+           ispending: 1
            } );
            requestcount++;
            
-           //requests.push(newrequest);
+           requests.push(newrequest);
     }
     
      function changestatusbyregistryofficer
@@ -168,4 +166,5 @@ contract Lawyer {
         
         requests[position].blrostatus = newstatus;
     }
+    
 }

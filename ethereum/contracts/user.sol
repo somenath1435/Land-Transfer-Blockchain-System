@@ -109,8 +109,8 @@ contract User {
            lawyerstatus: "Pending",
            registryofficerstatus:"Nil",
            blrostatus: "Nil",
-           registryofficerid: buyid,
-           blroid: buyid
+           registryofficerid: 0x0000000000000000000000000000000000000000,
+           blroid: 0x0000000000000000000000000000000000000000
            } );
            requestcount++;
            
