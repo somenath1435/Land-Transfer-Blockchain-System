@@ -1,6 +1,6 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
-const compiledFactory = require('./build/UserManager.json');
+const compiledFactory = require('./build_user/UserManager.json');
 
 const provider = new HDWalletProvider(
   'model basic scene left push agree summer fuel corn daughter boy inflict',
@@ -17,7 +17,7 @@ const deploy = async () => {
     JSON.parse(compiledFactory.interface)
   )
     .deploy({ data: compiledFactory.bytecode })
-    .send({ gas: '1000000', from: accounts[0] });
+    .send({ gas: '3000000', from: accounts[0] });
 
   console.log('Contract deployed to', result.options.address);
 };

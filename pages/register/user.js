@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, Button, Form, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import { Link , Router} from "../../routes";
-import factory from '../../ethereum/factory'
+import factory from '../../ethereum/factory_user'
 import web3 from "../../ethereum/web3";
 
 class User extends Component {

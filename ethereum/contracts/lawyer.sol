@@ -1,82 +1,78 @@
 pragma solidity ^0.4.19;
 
-contract UserManager {
+contract LawyerManager {
     
-    uint public usercount=0;
+    uint public lawyercount=0;
     mapping (address  => bool) public checker;
-    mapping (address => address) public usermanagermap;
+    mapping (address => address)public lawyermanagermap;
     address public storeaddress;
-    
-    function registeruser (
+    //this array stores the list of address of lawyers
+    address [] public  lawyeraddress;
+    function registerlawyer (
         string  firstname ,
         string  lastname ,
         uint phone ,
-        uint aadhar,
         address eth, 
-        uint bank) 
+        string govtid) 
         public  
     {
      require(eth == msg.sender);
      require(!checker[msg.sender]);
      
-     User newuser = new User(firstname,lastname,phone,aadhar,eth,bank);
+     Lawyer newlawyer = new Lawyer(firstname,lastname,phone,eth,govtid);
+     lawyeraddress.push(eth);
      checker[msg.sender]=true;
-     storeaddress=address(newuser);
-     usermanagermap[msg.sender]=storeaddress;
-     usercount++;
+     storeaddress=address(newlawyer);
+     lawyermanagermap[msg.sender]=storeaddress;
+     lawyercount++;
     }
     
     function getstoreaddress (address eth) public view returns (address){
         
         //require(eth == msg.sender);
         
-        return usermanagermap[eth];
+        return lawyermanagermap[eth];
     }
     
     
 }
 
-contract User {
+contract Lawyer {
     
     //This is the unique id for each user 
     address  public id ;
     uint public phonenum;
-    uint public aadharnum;
-    uint public banknum;
+    string public govid;
     string public firstname;
     string public lastname;
    
     
-    function User
+    function Lawyer
     (
         string  firnam, 
         string lasnam, 
-        uint phone, 
-        uint aadhar,
+        uint phone,
         address eth, 
-        uint bank) public
+        string govtid) public
     {
         phonenum=phone;
-        aadharnum= aadhar;
-        banknum= bank;
         id= eth;
         firstname= firnam;
         lastname= lasnam;
-        
+        govid=govtid;
         
     }
     
     function showdetails() public view returns
     (
-        string ,string ,uint,uint ,address,uint
+        string ,string ,uint,address,string
+        
     )
     {
-        return(firstname,lastname,phonenum,aadharnum,id,banknum);
+        return(firstname,lastname,phonenum,id,govid);
     }
     
-    //See this struct properly 
-    
-    struct Requestdetails {
+     struct Requestdetails {
         address buyerid;
         address sellerid;
         uint landid;
@@ -86,18 +82,23 @@ contract User {
         string lawyerstatus;
         string registryofficerstatus;
         string blrostatus;
+        uint buyerposition;
+        uint sellerposition;
+        uint ispending;
     }
     
-    Requestdetails [] public requests;
+     Requestdetails [] public requests;
     
     uint public requestcount=0;
     
-    function createrequest
+     function createrequest
     (
         address buyid,
         address sellid,
         uint lanid,
-        address lawid
+        address lawid,
+        uint buyerpos,
+        uint sellerpos
     ) 
     public 
     {
@@ -107,36 +108,20 @@ contract User {
            landid: lanid,
            lawyerid: lawid,
            lawyerstatus: "Pending",
-           registryofficerstatus:"Nil",
+           registryofficerstatus: "Pending",
            blrostatus: "Nil",
            registryofficerid: 0x0000000000000000000000000000000000000000,
-           blroid: 0x0000000000000000000000000000000000000000
+           blroid: 0x0000000000000000000000000000000000000000,
+           buyerposition: buyerpos,
+           sellerposition: sellerpos,
+           ispending: 1
            } );
            requestcount++;
            
            requests.push(newrequest);
     }
     
-    function changestatusbylawyer
-    (
-        address lawid,
-        uint position,
-        string newstatus,
-        address registryoffid
-    )
-    public
-    {
-        //require(position < requestcount);
-        
-        // require(lawid == requests[position].lawyerid);
-        
-        //require(msg.sender == lawid);
-        requests[position].lawyerstatus = newstatus;
-        requests[position].registryofficerid = registryoffid;
-    }
-    
-    
-    function changestatusbyregistryofficer
+     function changestatusbyregistryofficer
     (
         address lawyer,
         address officerid,
@@ -152,8 +137,8 @@ contract User {
         
         //require(requests[position].registryofficerid == officerid)
         
-         //require(msg.sender == officerid);
-         
+        //require(msg.sender == officerid);
+        
         requests[position].registryofficerstatus = newstatus;
         requests[position].blroid = blroid;
     }
@@ -181,4 +166,5 @@ contract User {
         
         requests[position].blrostatus = newstatus;
     }
+    
 }
