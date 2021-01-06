@@ -71,6 +71,13 @@ class RegOffDetails extends Component {
 
           {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
 
+          <br/><br/>
+          <Link route={`/regoff/${this.props.address}/showblro`}>
+            <a>
+              <Button content="See All BLRO" primary />
+            </a>
+          </Link>
+
         </div>
       </Layout>
     );

@@ -5,11 +5,11 @@ class AllLawyersRow extends Component {
 
   render() {
     const { Row, Cell } = Table;
-    const { lawyerid, fname, lname, phone, govtid } = this.props;
+    const { id, fname, lname, phone, govtid } = this.props;
 
     return (
       <Row>
-        <Cell>{lawyerid}</Cell>
+        <Cell>{id}</Cell>
         <Cell>{fname}</Cell>
         <Cell>{lname}</Cell>
         <Cell>{phone}</Cell>

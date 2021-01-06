@@ -12,6 +12,7 @@ routes
   .add('/lawyer/:address/allrequest','/lawyer/allrequest')
   .add('/lawyer/:address/requests','/lawyer/requests')
   .add('/regoff/:address','/regoff/details')
+  .add('/regoff/:address/showblro','/regoff/showblro')
   .add('/blro/:address','/blro/details')
   .add('/register', '/register')
   .add('/login','/login');

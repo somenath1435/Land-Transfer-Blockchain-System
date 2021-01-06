@@ -3,11 +3,11 @@ import { Card, Button, Form, Input, Message, Table } from "semantic-ui-react";
 import Layout from "../../components/layoutlogout";
 import { Link, Router } from "../../routes";
 import web3 from "../../ethereum/web3";
-import Lawyer from '../../ethereum/lawyerinstance';
-import factory from "../../ethereum/factory_lawyer"
+import BLRO from '../../ethereum/blroinstance';
+import factory from "../../ethereum/factory_blro"
 import LawyerRow from "../../components/AllLawyersRow"
 
-class ShowLawyers extends Component {
+class ShowBlro extends Component {
 
   state={
     count:0,
@@ -21,15 +21,15 @@ class ShowLawyers extends Component {
 
   async componentDidMount(){
     try{
-      const count=await factory.methods.lawyercount().call();
+      const count=await factory.methods.blrocount().call();
       this.setState({count:count});
       let arr=[]
       for(let i=0;i<count;i++)
       {
-        const eth=await factory.methods.lawyeraddress(i).call();
+        const eth=await factory.methods.blroaddress(i).call();
         const deployedaddress=await factory.methods.getstoreaddress(eth).call();
-        const lawyer= Lawyer(deployedaddress);
-        const summary = await lawyer.methods.showdetails().call();
+        const blro= BLRO(deployedaddress);
+        const summary = await blro.methods.showdetails().call();
         // console.log(summary);
         arr.push(summary);
       }
@@ -65,13 +65,13 @@ class ShowLawyers extends Component {
 
     return (
       <Layout>
-        <h1>All lawyers will be shown here!</h1>
-        <h1>There are currently {this.state.count} lawyers available</h1>
+        <h1>All BLRO will be shown here!</h1>
+        <h1>There are currently {this.state.count} BLRO available</h1>
 
         <Table>
           <Header>
             <Row>
-              <HeaderCell>Lawyer ID</HeaderCell>
+              <HeaderCell>BLRO ID</HeaderCell>
               <HeaderCell>First Name</HeaderCell>
               <HeaderCell>Last Name</HeaderCell>
               <HeaderCell>Phone</HeaderCell>
@@ -86,4 +86,4 @@ class ShowLawyers extends Component {
   }
 }
 
-export default ShowLawyers;
+export default ShowBlro;
