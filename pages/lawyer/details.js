@@ -79,6 +79,13 @@ class LawyerDetails extends Component {
           </Link>
 
           <br/><br/>
+          <Link route={`/lawyer/${this.props.address}/showblro`}>
+            <a>
+              <Button content="See All BLRO" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
           <Link route={`/lawyer/${this.props.address}/allrequest`}>
             <a>
               <Button content="See All Requests" primary />

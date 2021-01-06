@@ -86,6 +86,20 @@ class UserDetails extends Component {
           </Link>
 
           <br/><br/>
+          <Link route={`/user/${this.props.add}/showregoff`}>
+            <a>
+              <Button content="See All Registry Officers" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
+          <Link route={`/user/${this.props.add}/showblro`}>
+            <a>
+              <Button content="See All BLRO" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
           <Link route={`/user/${this.props.add}/allrequest`}>
             <a>
               <Button content="See All Requests" primary />
