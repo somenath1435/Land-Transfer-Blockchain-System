@@ -7,6 +7,9 @@ routes
   .add('/user/:address/newrequest','/user/newrequest')
   .add('/user/:address/allrequest','/user/allrequest')
   .add('/lawyer/:address','/lawyer/details')
+  .add('/lawyer/:address/showregoff','/lawyer/showregoff')
+  .add('/lawyer/:address/newrequest','/lawyer/newrequest')
+  .add('/lawyer/:address/allrequest','/lawyer/allrequest')
   .add('/lawyer/:address/requests','/lawyer/requests')
   .add('/register', '/register')
   .add('/login','/login');
