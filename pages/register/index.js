@@ -20,13 +20,13 @@ class Register extends Component {
         </Link>
         <br />
         <br />
-        <Link route="/page1">
+        <Link route="/register/regoff">
           <a>
             <Button content="Register Officer" icon="add circle" primary />
           </a>
         </Link>
 
-        <Link route="/page1">
+        <Link route="/register/blro">
           <a>
             <Button content="Register Blro" icon="add circle" primary />
           </a>
