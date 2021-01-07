@@ -25,8 +25,6 @@ class LawyerDetails extends Component {
   async componentDidMount() {
     try{
       const addr = await factory.methods.getstoreaddress(this.props.address).call();
-      const list= await factory.methods.lawyeraddress(0).call();
-      console.log(list);
       console.log(addr);
       const lawyer= Lawyer(addr);
       const summary = await lawyer.methods.showdetails().call();

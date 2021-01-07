@@ -32,7 +32,7 @@ class Blro extends Component {
       const accounts = await web3.eth.getAccounts();
       console.log("accounts[0] is "+accounts[0]);
       const st=this.state;
-      await factory.methods.registerblro(st.firstname,st.lastname,st.phone,st.ethaddress,st.govtid)
+      await factory.methods.registerblroofficer(st.firstname,st.lastname,st.phone,st.ethaddress,st.govtid)
       .send({from: accounts[0]}); 
 
       Router.replaceRoute(`/blro/${this.state.ethaddress}`);
