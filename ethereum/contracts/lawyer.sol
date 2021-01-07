@@ -141,6 +141,7 @@ contract Lawyer {
         
         requests[position].registryofficerstatus = newstatus;
         requests[position].blroid = blroid;
+        requests[position].blrostatus="Pending";
     }
     
     

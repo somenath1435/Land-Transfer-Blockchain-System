@@ -133,6 +133,7 @@ contract User {
         //require(msg.sender == lawid);
         requests[position].lawyerstatus = newstatus;
         requests[position].registryofficerid = registryoffid;
+        requests[position].registryofficerstatus="Pending";
     }
     
     
@@ -156,6 +157,7 @@ contract User {
          
         requests[position].registryofficerstatus = newstatus;
         requests[position].blroid = blroid;
+        requests[position].blrostatus="Pending";
     }
     
     

@@ -111,7 +111,7 @@ contract Registryofficer {
            landid: lanid,
            lawyerid: lawid,
            registryofficerstatus: "Pending",
-           blrostatus: "Pending",
+           blrostatus: "Nil",
            registryofficerid: officerid,
            blroid: 0x0000000000000000000000000000000000000000,
            buyerposition: buyerpos,
