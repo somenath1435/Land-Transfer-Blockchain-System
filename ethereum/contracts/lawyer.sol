@@ -121,7 +121,7 @@ contract Lawyer {
            requests.push(newrequest);
     }
     
-     function changestatusbyregistryofficer
+     function approvebyregistryofficer
     (
         address lawyer,
         address officerid,
@@ -144,6 +144,26 @@ contract Lawyer {
         requests[position].blrostatus="Pending";
     }
     
+     function rejectbyregistryofficer
+    (
+        address lawyer,
+        address officerid,
+        uint position,
+        string newstatus
+    )
+    public
+    {
+        //require(position < requestcount);
+        
+        // require(lawid == requests[position].lawyerid);
+        
+        //require(requests[position].registryofficerid == officerid)
+        
+        //require(msg.sender == officerid);
+        
+        requests[position].registryofficerstatus = newstatus;
+
+    }
     
     function changestatusbyblro
     (

@@ -117,7 +117,7 @@ contract User {
            requests.push(newrequest);
     }
     
-    function changestatusbylawyer
+    function approvebylawyer
     (
         address lawid,
         uint position,
@@ -136,8 +136,23 @@ contract User {
         requests[position].registryofficerstatus="Pending";
     }
     
+    function rejectbylawyer
+    (
+        address lawid,
+        uint position,
+        string newstatus
+    )
+    public
+    {
+        //require(position < requestcount);
+        
+        // require(lawid == requests[position].lawyerid);
+        
+        //require(msg.sender == lawid);
+        requests[position].lawyerstatus = newstatus;
+    }
     
-    function changestatusbyregistryofficer
+    function approvebyregistryofficer
     (
         address lawyer,
         address officerid,
@@ -160,6 +175,25 @@ contract User {
         requests[position].blrostatus="Pending";
     }
     
+    function rejectbyregistryofficer
+    (
+        address lawyer,
+        address officerid,
+        uint position,
+        string newstatus
+    )
+    public
+    {
+        //require(position < requestcount);
+        
+        // require(lawid == requests[position].lawyerid);
+        
+        //require(requests[position].registryofficerid == officerid)
+        
+         //require(msg.sender == officerid);
+         
+        requests[position].registryofficerstatus = newstatus;
+    }
     
     function changestatusbyblro
     (
