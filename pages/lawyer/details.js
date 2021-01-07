@@ -92,12 +92,6 @@ class LawyerDetails extends Component {
             </a>
           </Link>
 
-          <br/><br/>
-          <Link route={`/lawyer/${this.props.address}/newrequest`}>
-            <a>
-              <Button content="Make New Request" primary />
-            </a>
-          </Link>
         </div>
       </Layout>
     );

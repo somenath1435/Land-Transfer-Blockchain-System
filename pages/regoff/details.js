@@ -78,6 +78,13 @@ class RegOffDetails extends Component {
             </a>
           </Link>
 
+          <br/><br/>
+          <Link route={`/regoff/${this.props.address}/allrequest`}>
+            <a>
+              <Button content="See All Requests" primary />
+            </a>
+          </Link>
+
         </div>
       </Layout>
     );

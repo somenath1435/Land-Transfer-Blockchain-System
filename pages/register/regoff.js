@@ -3,7 +3,7 @@ import { Card, Button, Form, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import { Link, Router } from "../../routes";
 import web3 from "../../ethereum/web3";
-import factory from "../../ethereum/factory_registryofficer"
+import factory from "../../ethereum/factory_registryofficer";
 
 class RegOff extends Component {
   state = {

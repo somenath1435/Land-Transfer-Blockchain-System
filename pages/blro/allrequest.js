@@ -4,8 +4,8 @@ import Layout from "../../components/layoutlogout";
 import { Link, Router } from "../../routes";
 import RequestRows from "../../components/RequestRows";
 import web3 from "../../ethereum/web3";
-import Lawyer from '../../ethereum/lawyerinstance';
-import factory from "../../ethereum/factory_lawyer";
+import Blro from '../../ethereum/blroinstance';
+import factory from "../../ethereum/factory_blro";
 
 class AllRequest extends Component {
   state = {
@@ -22,13 +22,13 @@ class AllRequest extends Component {
     try{
       const addr = await factory.methods.getstoreaddress(this.props.address).call();
       console.log(addr);
-      const lawyer= Lawyer(addr);
-      const count = await lawyer.methods.requestcount().call();
+      const blro= Blro(addr);
+      const count = await blro.methods.requestcount().call();
       this.setState({requestcount:count});
       let arr=[]
       for(let i=0;i<count;i++)
       {
-        const req= await lawyer.methods.requests(i).call();
+        const req= await blro.methods.requests(i).call();
         arr.push(req);
       }
       this.setState({requests:arr});
@@ -48,7 +48,7 @@ class AllRequest extends Component {
           sellerid={req[1]}
           landid={req[2]}
           address={this.props.address}
-          caller="lawyer"
+          caller="blro"
         />
       );
     });
@@ -62,7 +62,7 @@ class AllRequest extends Component {
         <div>
           <h1>All requests will be shown here!</h1>
           <h1>
-            {this.state.requestcount} Requests found for Lawyer{" "}
+            {this.state.requestcount} Requests found for BLRO {" "}
             {this.props.address}
           </h1>
 
