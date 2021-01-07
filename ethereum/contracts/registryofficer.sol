@@ -148,4 +148,29 @@ contract Registryofficer {
         requests[position].blrostatus = newstatus;
     }
     
+    
+    function approve
+    (
+        address officerid,
+        uint position
+    )
+    public 
+    {
+        requests[position].ispending=0;
+        requests[position].registryofficerstatus="Approved";
+        requests[position].blroid=officerid;
+        requests[position].blrostatus="Pending";
+        
+    }
+    
+    function reject
+    (
+        uint position
+    )
+    public
+    {
+        requests[position].ispending=0;
+        requests[position].registryofficerstatus="Rejected";
+    }
+    
 }

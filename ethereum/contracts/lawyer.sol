@@ -166,5 +166,29 @@ contract Lawyer {
         
         requests[position].blrostatus = newstatus;
     }
+
+    function approve
+    (
+        address officerid,
+        uint position
+    )
+    public 
+    {
+        requests[position].ispending=0;
+        requests[position].lawyerstatus="Approved";
+        requests[position].registryofficerid=officerid;
+        requests[position].registryofficerstatus="Pending";
+        
+    }
+    
+    function reject
+    (
+        uint position
+    )
+    public
+    {
+        requests[position].ispending=0;
+        requests[position].lawyerstatus="Rejected";
+    }
     
 }

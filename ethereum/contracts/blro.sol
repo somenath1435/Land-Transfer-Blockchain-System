@@ -9,7 +9,7 @@ contract BlroManager {
     //this array stores the list of address of blro
     address [] public  blroaddress;
     
-    function registerblro (
+    function registerblroofficer (
         string  firstname ,
         string  lastname ,
         uint phone ,
@@ -126,6 +126,28 @@ contract Blro {
            requests.push(newrequest);
     }
     
+    function approve
+    (
+        uint position
+    )
+    public 
+    {
+        requests[position].ispending=0;
+        requests[position].blrostatus="Approved";
+        
+        //Land transfer will happen here
+        
+    }
+    
+    function reject
+    (
+        uint position
+    )
+    public
+    {
+        requests[position].ispending=0;
+        requests[position].blrostatus="Rejected";
+    }
     
    
     
