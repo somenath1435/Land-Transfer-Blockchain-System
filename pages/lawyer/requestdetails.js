@@ -113,7 +113,7 @@ class RequestDetails extends Component {
         const lawyer = Lawyer(lawyeradd);
         console.log(lawyeradd);
         console.log(lawyer);
-        const regoffadd = await regofffactory.methods.getstoreaddress(this.state.regoffid).call();
+        const regoffadd = await regofffactory.methods.getstoreaddress(this.state.newregoff).call();
         console.log("deply regoff addr: "+regoffadd);
         const regoff = RegOff(regoffadd);
         console.log(regoff);
