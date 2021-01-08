@@ -35,6 +35,78 @@ contract BlroManager {
         return blromanagermap[eth];
     }
     
+    uint public landcount=0;
+    struct Land {
+        uint landid;
+        string state;
+        string city;
+        uint pincode;
+        address ownerid;
+        uint price;
+        string khaatanumber;
+        uint areaofland;
+        string landmark;
+        address registeredbyblro;
+    }
+    
+    address [][100] public ownerlist;
+    uint [] public ownerlistsize;
+    Land [] public lands;
+    
+    function registerland 
+    (
+        string state1,
+        string city1,
+        uint pincode1,
+        address ownerid1,
+        uint price1,
+        string khaatanumber1,
+        uint areaofland1,
+        string landmark1,
+        address registeredbyblro1
+    )
+    public
+    {
+        Land memory newland = Land ({
+           landid: landcount,
+           state: state1,
+           city: city1,
+           pincode: pincode1,
+           ownerid: ownerid1,
+           price: price1,
+           khaatanumber: khaatanumber1,
+           areaofland: areaofland1,
+           landmark: landmark1,
+           registeredbyblro: registeredbyblro1
+           
+        
+        }) ;
+        
+        lands.push(newland);
+        //ownerlist[landcount].push(ownerid1);
+        //ownerlistsize.push(1);
+        landcount++;
+        
+        
+    }
+    
+    /*function showwoners (uint landid) public returns (address [] memory)
+    {
+        return ownerlist[landid];
+    }*/
+    
+    function transferland
+    (
+        uint landid,
+        address buyerid
+    )
+    public
+    {
+        lands[landid].ownerid=buyerid;
+        //ownerlist[landid].push(buyerid);
+        //ownerlistsize[landid]++;
+    }
+    
     
 }
 

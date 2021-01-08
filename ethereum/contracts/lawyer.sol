@@ -108,7 +108,7 @@ contract Lawyer {
            landid: lanid,
            lawyerid: lawid,
            lawyerstatus: "Pending",
-           registryofficerstatus: "Pending",
+           registryofficerstatus: "Nil",
            blrostatus: "Nil",
            registryofficerid: 0x0000000000000000000000000000000000000000,
            blroid: 0x0000000000000000000000000000000000000000,
