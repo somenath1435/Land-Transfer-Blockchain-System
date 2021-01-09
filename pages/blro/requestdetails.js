@@ -6,6 +6,7 @@ import RequestRows from "../../components/RequestRows";
 import web3 from "../../ethereum/web3";
 import Blro from '../../ethereum/blroinstance';
 import factory from "../../ethereum/factory_blro";
+import CheckOwner from "../../components/checkowner";
 
 class RequestDetails extends Component {
   state = {
@@ -107,6 +108,9 @@ class RequestDetails extends Component {
           </Button>
 
         </div>
+        <br/><br/>
+        {!isDisabled && <CheckOwner/>}
+        <br/><br/>
       </Layout>
     );
   }

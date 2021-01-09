@@ -12,6 +12,7 @@ import User from '../../ethereum/userinstance';
 import userfactory from "../../ethereum/factory_user";
 import Blro from "../../ethereum/blroinstance";
 import blrofactory from "../../ethereum/factory_blro";
+import CheckOwner from "../../components/checkowner";
 
 class RequestDetails extends Component {
   state = {
@@ -220,6 +221,10 @@ class RequestDetails extends Component {
           {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
 
           {isDisabled && <h2>This request is already {this.state.regoffstatus}</h2>}
+
+          <br/><br/>
+          {!isDisabled && <CheckOwner/>}
+          <br/><br/>
 
         </div>
       </Layout>

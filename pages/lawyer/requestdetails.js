@@ -10,6 +10,7 @@ import RegOff from '../../ethereum/registryofficerinstance';
 import regofffactory from "../../ethereum/factory_registryofficer";
 import User from '../../ethereum/userinstance';
 import userfactory from "../../ethereum/factory_user";
+import CheckOwner from "../../components/checkowner";
 
 class RequestDetails extends Component {
   state = {
@@ -218,6 +219,9 @@ class RequestDetails extends Component {
           {isDisabled && <h2>This request is already {this.state.lawyerstatus}</h2>}
 
         </div>
+        <br/><br/>
+        {!isDisabled && <CheckOwner/>}
+        <br/><br/>
       </Layout>
     );
   }
