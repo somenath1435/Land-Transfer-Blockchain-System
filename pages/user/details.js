@@ -112,6 +112,12 @@ class UserDetails extends Component {
               <Button content="Make New Request" primary />
             </a>
           </Link>
+          <br/><br/>
+          <Link route={`/user/${this.props.add}/alllands`}>
+            <a>
+              <Button content="View All Lands" primary />
+            </a>
+          </Link>
         </div>
       </Layout>
     );
