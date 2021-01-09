@@ -4,8 +4,14 @@ import Layout from "../../components/layoutlogout";
 import { Link, Router } from "../../routes";
 import RequestRows from "../../components/RequestRows";
 import web3 from "../../ethereum/web3";
+import Lawyer from '../../ethereum/lawyerinstance';
+import lawyerfactory from "../../ethereum/factory_lawyer";
 import RegOff from '../../ethereum/registryofficerinstance';
-import factory from "../../ethereum/factory_registryofficer";
+import regofffactory from "../../ethereum/factory_registryofficer";
+import User from '../../ethereum/userinstance';
+import userfactory from "../../ethereum/factory_user";
+import Blro from "../../ethereum/blroinstance";
+import blrofactory from "../../ethereum/factory_blro";
 
 class RequestDetails extends Component {
   state = {
@@ -20,18 +26,21 @@ class RequestDetails extends Component {
     buyerposition: 0,
     sellerposition: 0,
     lawyerposition: 0,
-    ispending: 1
+    ispending: 1,
+    rejectloading: false,
+    approveloading: false,
+    errorMessage: "",
+    newblro:""
   };
 
   static async getInitialProps(props) {
-    const address = props.query.address;
-    const id = props.query.id;
+    const {address,id} = props.query;
     return { address, id };
   }
 
   async componentDidMount() {
     try{
-      const addr = await factory.methods.getstoreaddress(this.props.address).call();
+      const addr = await regofffactory.methods.getstoreaddress(this.props.address).call();
       console.log(addr);
       const regoff= RegOff(addr);
       const req = await regoff.methods.requests(this.props.id).call();
@@ -84,15 +93,99 @@ class RequestDetails extends Component {
   }
 
   onApprove = async () => {
-    console.log("Approved");
+    this.setState({approveloading:true, errorMessage: ""});
+    try{
+      const newblroid=this.state.newblro;
+      if(newblroid==="") 
+        this.setState({ errorMessage: "Enter valid BLRO ID while approval" });
+      else
+      {
+        //do api calls
+        console.log("Approved with blro id: "+newblroid);
+
+        const buyeradd = await userfactory.methods.getstoreaddress(this.state.buyerid).call();
+        const buyer = User(buyeradd);
+        const selleradd = await userfactory.methods.getstoreaddress(this.state.sellerid).call();
+        const seller = User(selleradd);
+        const lawyeradd = await lawyerfactory.methods.getstoreaddress(this.state.lawyerid).call();
+        const lawyer = Lawyer(lawyeradd);
+        const regoffadd = await regofffactory.methods.getstoreaddress(this.state.regoffid).call();
+        const regoff = RegOff(regoffadd);
+        const blroadd = await blrofactory.methods.getstoreaddress(this.state.newblro).call();
+        const blro = Blro(blroadd);
+
+        const accounts = await web3.eth.getAccounts();
+        console.log("accounts[0] is "+accounts[0]);
+        console.log("props id is "+this.props.id);
+        
+        await buyer.methods.approvebyregistryofficer(this.state.lawyerid,this.state.regoffid,this.state.buyerposition,"Approved",newblroid)
+        .send({from:accounts[0]});
+
+        await seller.methods.approvebyregistryofficer(this.state.lawyerid,this.state.regoffid,this.state.sellerposition,"Approved",newblroid)
+        .send({from:accounts[0]});
+
+        await lawyer.methods.approvebyregistryofficer(this.state.lawyerid,this.state.regoffid,this.state.lawyerposition,"Approved",newblroid)
+        .send({from:accounts[0]});
+        
+        await regoff.methods.approve(newblroid,this.props.id)
+        .send({from:accounts[0]});
+
+        await blro.methods.createrequest(
+          this.state.buyerid,
+          this.state.sellerid,
+          this.state.landid,
+          this.state.lawyerid,
+          this.state.regoffid,
+          newblroid,
+          this.state.buyerposition,
+          this.state.sellerposition,
+          this.state.lawyerposition,
+          this.props.id
+        ).send({from:accounts[0]});
+
+        Router.replaceRoute(`/regoff/${this.props.address}/allrequest`);
+
+      }
+    }catch(err){
+      console.log(err);
+      this.setState({ errorMessage: err.message });
+    }
+    this.setState({approveloading:false});
   };
 
   onReject = async ()=>{
-    console.log("Rejected");
+    this.setState({rejectloading:true, errorMessage: ""});
+    try{
+      const buyeradd = await userfactory.methods.getstoreaddress(this.state.buyerid).call();
+      const buyer = User(buyeradd);
+      const selleradd = await userfactory.methods.getstoreaddress(this.state.sellerid).call();
+      const seller = User(selleradd);
+      const lawyeradd = await lawyerfactory.methods.getstoreaddress(this.state.lawyerid).call();
+      const lawyer = Lawyer(lawyeradd);
+      const regoffadd = await regofffactory.methods.getstoreaddress(this.state.regoffid).call();
+      const regoff = RegOff(regoffadd);
+
+      const accounts = await web3.eth.getAccounts();
+      console.log("accounts[0] is "+accounts[0]);
+      
+      await buyer.methods.rejectbyregistryofficer(this.state.lawyerid,this.state.regoffid,this.state.buyerposition,"Rejected").send({from:accounts[0]});
+
+      await seller.methods.rejectbyregistryofficer(this.state.lawyerid,this.state.regoffid,this.state.sellerposition,"Rejected").send({from:accounts[0]});
+
+      await lawyer.methods.rejectbyregistryofficer(this.state.lawyerid,this.state.regoffid,this.state.lawyerposition,"Rejected").send({from:accounts[0]});
+
+      await regoff.methods.reject(this.props.id).send({from:accounts[0]});
+
+      Router.replaceRoute(`/regoff/${this.props.address}/allrequest`);
+    }catch(err){
+      console.log(err);
+      this.setState({ errorMessage: err.message });
+    }
+    this.setState({rejectloading:false});
   };
 
   render() {
-    const isDisabled = (this.state.ispending)===0;
+    const isDisabled = (this.state.ispending)==="0";
     return (
       <Layout>
         <div>
@@ -102,13 +195,31 @@ class RequestDetails extends Component {
 
           <br/><br/>
 
-          <Button positive onClick={this.onApprove} disabled={isDisabled}>
+          <Button negative onClick={this.onReject} disabled={isDisabled} 
+            loading={this.state.rejectloading}>
+            Reject Request
+          </Button>
+
+          <Button positive onClick={this.onApprove} disabled={isDisabled}
+            loading={this.state.approveloading}>
             Approve Request
           </Button>
 
-          <Button negative onClick={this.onReject} disabled={isDisabled}>
-            Reject Request
-          </Button>
+          <br/><br/>
+
+          <Input
+              value={this.state.newblro}
+              placeholder="Enter BLRO ID during approval"
+              disabled={isDisabled}
+              fluid={true}
+              onChange={(event) =>
+                this.setState({ newblro: event.target.value })
+              }
+          />
+
+          {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
+
+          {isDisabled && <h2>This request is already {this.state.regoffstatus}</h2>}
 
         </div>
       </Layout>
