@@ -23,6 +23,7 @@ routes
   .add('/blro/:address/allrequest','/blro/allrequest')
   .add('/blro/:address/pendingrequest','/blro/pendingrequest')
   .add('/blro/:address/allrequest/:id','/blro/requestdetails')
+  .add('/blro/:address/registerland','/blro/registerland')
   .add('/register', '/register')
   .add('/login','/login');
 

@@ -85,6 +85,13 @@ class BlroDetails extends Component {
             </a>
           </Link>
 
+          <br/><br/>
+          <Link route={`/blro/${this.props.address}/registerland`}>
+            <a>
+              <Button content="Register Land" primary />
+            </a>
+          </Link>
+
         </div>
       </Layout>
     );
