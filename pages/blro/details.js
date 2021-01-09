@@ -72,6 +72,13 @@ class BlroDetails extends Component {
           {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
 
           <br/><br/>
+          <Link route={`/blro/${this.props.address}/pendingrequest`}>
+            <a>
+              <Button content="See Pending Requests" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
           <Link route={`/blro/${this.props.address}/allrequest`}>
             <a>
               <Button content="See All Requests" primary />
