@@ -4,8 +4,14 @@ import Layout from "../../components/layoutlogout";
 import { Link, Router } from "../../routes";
 import RequestRows from "../../components/RequestRows";
 import web3 from "../../ethereum/web3";
-import Blro from '../../ethereum/blroinstance';
-import factory from "../../ethereum/factory_blro";
+import Lawyer from '../../ethereum/lawyerinstance';
+import lawyerfactory from "../../ethereum/factory_lawyer";
+import RegOff from '../../ethereum/registryofficerinstance';
+import regofffactory from "../../ethereum/factory_registryofficer";
+import User from '../../ethereum/userinstance';
+import userfactory from "../../ethereum/factory_user";
+import Blro from "../../ethereum/blroinstance";
+import blrofactory from "../../ethereum/factory_blro";
 import CheckOwner from "../../components/checkowner";
 
 class RequestDetails extends Component {
@@ -21,7 +27,10 @@ class RequestDetails extends Component {
     sellerposition: 0,
     lawyerposition: 0,
     registryofficerposition: 0,
-    ispending: 1
+    ispending: 1,
+    rejectloading: false,
+    approveloading: false,
+    errorMessage: ""
   };
 
   static async getInitialProps(props) {
@@ -32,7 +41,7 @@ class RequestDetails extends Component {
 
   async componentDidMount() {
     try{
-      const addr = await factory.methods.getstoreaddress(this.props.address).call();
+      const addr = await blrofactory.methods.getstoreaddress(this.props.address).call();
       console.log(addr);
       const blro= Blro(addr);
       const req = await blro.methods.requests(this.props.id).call();
@@ -81,15 +90,88 @@ class RequestDetails extends Component {
   }
 
   onApprove = async () => {
-    console.log("Approved");
+    this.setState({approveloading:true, errorMessage: ""});
+    try{
+      const buyeradd = await userfactory.methods.getstoreaddress(this.state.buyerid).call();
+      const buyer = User(buyeradd);
+      const selleradd = await userfactory.methods.getstoreaddress(this.state.sellerid).call();
+      const seller = User(selleradd);
+      const lawyeradd = await lawyerfactory.methods.getstoreaddress(this.state.lawyerid).call();
+      const lawyer = Lawyer(lawyeradd);
+      const regoffadd = await regofffactory.methods.getstoreaddress(this.state.regoffid).call();
+      const regoff = RegOff(regoffadd);
+      const blroadd = await blrofactory.methods.getstoreaddress(this.state.blroid).call();
+      const blro = Blro(blroadd);
+
+      const accounts = await web3.eth.getAccounts();
+      console.log("accounts[0] is "+accounts[0]);
+      console.log("props id is "+this.props.id);
+      
+      await buyer.methods.changestatusbyblro(this.state.lawyerid,this.state.regoffid,this.state.blroid,this.state.buyerposition,"Approved").send({from:accounts[0]});
+
+      await seller.methods.changestatusbyblro(this.state.lawyerid,this.state.regoffid,this.state.blroid,this.state.sellerposition,"Approved").send({from:accounts[0]});
+
+      await lawyer.methods.changestatusbyblro(this.state.lawyerid,this.state.regoffid,this.state.blroid,this.state.lawyerposition,"Approved").send({from:accounts[0]});
+
+      await regoff.methods.changestatusbyblro(this.state.lawyerid,this.state.regoffid,this.state.blroid,this.state.registryofficerposition,"Approved")
+      .send({from:accounts[0]});
+
+      await blro.methods.approve(this.props.id).send({from:accounts[0]});
+
+      await blrofactory.methods.transferland(this.state.landid,this.state.buyerid)
+      .send({from:accounts[0]});
+
+      Router.replaceRoute(`/blro/${this.props.address}/allrequest`);
+
+    }
+    catch(err){
+      console.log(err);
+      this.setState({ errorMessage: err.message });
+    }
+    this.setState({approveloading:false});
   };
 
   onReject = async ()=>{
-    console.log("Rejected");
+    this.setState({rejectloading:true, errorMessage: ""});
+    try{
+      const buyeradd = await userfactory.methods.getstoreaddress(this.state.buyerid).call();
+      const buyer = User(buyeradd);
+      const selleradd = await userfactory.methods.getstoreaddress(this.state.sellerid).call();
+      const seller = User(selleradd);
+      const lawyeradd = await lawyerfactory.methods.getstoreaddress(this.state.lawyerid).call();
+      const lawyer = Lawyer(lawyeradd);
+      const regoffadd = await regofffactory.methods.getstoreaddress(this.state.regoffid).call();
+      const regoff = RegOff(regoffadd);
+      const blroadd = await blrofactory.methods.getstoreaddress(this.state.blroid).call();
+      const blro = Blro(blroadd);
+
+      const accounts = await web3.eth.getAccounts();
+      console.log("accounts[0] is "+accounts[0]);
+      console.log("props id is "+this.props.id);
+      
+      await buyer.methods.changestatusbyblro(this.state.lawyerid,this.state.regoffid,this.state.blroid,this.state.buyerposition,"Rejected").send({from:accounts[0]});
+
+      await seller.methods.changestatusbyblro(this.state.lawyerid,this.state.regoffid,this.state.blroid,this.state.sellerposition,"Rejected").send({from:accounts[0]});
+
+      await lawyer.methods.changestatusbyblro(this.state.lawyerid,this.state.regoffid,this.state.blroid,this.state.lawyerposition,"Rejected").send({from:accounts[0]});
+
+      await regoff.methods.changestatusbyblro(this.state.lawyerid,this.state.regoffid,this.state.blroid,this.state.registryofficerposition,"Rejected")
+      .send({from:accounts[0]});
+
+      await blro.methods.reject(this.props.id).send({from:accounts[0]});
+
+      Router.replaceRoute(`/blro/${this.props.address}/allrequest`);
+
+    }
+    catch(err){
+      console.log(err);
+      this.setState({ errorMessage: err.message });
+    }
+    this.setState({rejectloading:false});
   };
 
   render() {
-    const isDisabled = (this.state.ispending)===0;
+    const isDisabled = (this.state.ispending)==="0";
     return (
       <Layout>
         <div>
@@ -99,13 +181,21 @@ class RequestDetails extends Component {
 
           <br/><br/>
 
-          <Button positive onClick={this.onApprove} disabled={isDisabled}>
+          <Button negative onClick={this.onReject} disabled={isDisabled}
+            loading={this.state.rejectloading}>
+            Reject Request
+          </Button>
+
+          <Button positive onClick={this.onApprove} disabled={isDisabled}
+            loading={this.state.approveloading}>
             Approve Request
           </Button>
 
-          <Button negative onClick={this.onReject} disabled={isDisabled}>
-            Reject Request
-          </Button>
+          <br/><br/>
+
+          {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
+
+          {isDisabled && <h2>This request is already {this.state.blrostatus}</h2>}
 
         </div>
         <br/><br/>
