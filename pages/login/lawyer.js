@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Card, Button, Form, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import { Router,Link } from "../../routes";
+import factory from "../../ethereum/factory_lawyer";
+import web3 from "../../ethereum/web3";
 
 class Lawyer extends Component {
   state = {
@@ -18,6 +20,12 @@ class Lawyer extends Component {
     try {
       //write
       console.log(this.state.ethaddress);
+      const accounts = await web3.eth.getAccounts();
+      console.log("accounts[0] is "+accounts[0]);
+      if(this.state.ethaddress!==accounts[0]) throw Error("Input Ethereum address is different from Metamask account address");
+      const checker = await factory.methods.checker(this.state.ethaddress).call();
+      if(checker==false) throw Error("This Address is not registered");
+
       Router.replaceRoute(`/lawyer/${this.state.ethaddress}`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -34,7 +42,7 @@ class Lawyer extends Component {
           <Form.Field>
             <label>Enter Lawyer Ethereum Address</label>
             <Input
-              value={this.state.value}
+              value={this.state.ethaddress}
               onChange={(event) => this.setState({ ethaddress: event.target.value })}
             />
           </Form.Field>
