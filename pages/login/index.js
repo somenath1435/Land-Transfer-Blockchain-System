@@ -20,15 +20,15 @@ class Login extends Component {
         </Link>
         <br />
         <br />
-        <Link route="/page1">
+        <Link route="/login/regoff">
           <a>
-            <Button content="Login Officer" primary />
+            <Button content="Login Registry Officer" primary />
           </a>
         </Link>
 
-        <Link route="/page1">
+        <Link route="/login/blro">
           <a>
-            <Button content="Login Blro" primary></Button>
+            <Button content="Login BLRO" primary></Button>
           </a>
         </Link>
       </Layout>

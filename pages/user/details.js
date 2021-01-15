@@ -79,9 +79,30 @@ class UserDetails extends Component {
           {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
 
           <br/><br/>
+          <Link route={`/user/${this.props.add}/showusers`}>
+            <a>
+              <Button content="See All Users" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
           <Link route={`/user/${this.props.add}/showlawyers`}>
             <a>
               <Button content="See All Lawyers" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
+          <Link route={`/user/${this.props.add}/showregoff`}>
+            <a>
+              <Button content="See All Registry Officers" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
+          <Link route={`/user/${this.props.add}/showblro`}>
+            <a>
+              <Button content="See All BLRO" primary />
             </a>
           </Link>
 
@@ -96,6 +117,17 @@ class UserDetails extends Component {
           <Link route={`/user/${this.props.add}/newrequest`}>
             <a>
               <Button content="Make New Request" primary />
+            </a>
+          </Link>
+          <br/><br/>
+          <Link route={`/user/${this.props.add}/alllands`}>
+            <a>
+              <Button content="View All Lands" primary />
+            </a>
+          </Link>
+          <Link route={`/user/${this.props.add}/mylands`}>
+            <a>
+              <Button content="View My Lands" primary />
             </a>
           </Link>
         </div>

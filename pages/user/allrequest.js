@@ -71,7 +71,7 @@ class AllRequest extends Component {
       };
     });
 
-    return <Card.Group items={items} />;
+    return <Card.Group items={items} itemsPerRow="2" />;
   }
 
   render() {

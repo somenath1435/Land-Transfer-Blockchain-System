@@ -7,6 +7,8 @@ contract UserManager {
     mapping (address => address) public usermanagermap;
     address public storeaddress;
     
+    //this array stores the list of address of users
+    address [] public  useraddress;
     function registeruser (
         string  firstname ,
         string  lastname ,
@@ -23,6 +25,7 @@ contract UserManager {
      checker[msg.sender]=true;
      storeaddress=address(newuser);
      usermanagermap[msg.sender]=storeaddress;
+     useraddress.push(eth);
      usercount++;
     }
     
@@ -117,7 +120,7 @@ contract User {
            requests.push(newrequest);
     }
     
-    function changestatusbylawyer
+    function approvebylawyer
     (
         address lawid,
         uint position,
@@ -133,10 +136,26 @@ contract User {
         //require(msg.sender == lawid);
         requests[position].lawyerstatus = newstatus;
         requests[position].registryofficerid = registryoffid;
+        requests[position].registryofficerstatus="Pending";
     }
     
+    function rejectbylawyer
+    (
+        address lawid,
+        uint position,
+        string newstatus
+    )
+    public
+    {
+        //require(position < requestcount);
+        
+        // require(lawid == requests[position].lawyerid);
+        
+        //require(msg.sender == lawid);
+        requests[position].lawyerstatus = newstatus;
+    }
     
-    function changestatusbyregistryofficer
+    function approvebyregistryofficer
     (
         address lawyer,
         address officerid,
@@ -156,8 +175,28 @@ contract User {
          
         requests[position].registryofficerstatus = newstatus;
         requests[position].blroid = blroid;
+        requests[position].blrostatus="Pending";
     }
     
+    function rejectbyregistryofficer
+    (
+        address lawyer,
+        address officerid,
+        uint position,
+        string newstatus
+    )
+    public
+    {
+        //require(position < requestcount);
+        
+        // require(lawid == requests[position].lawyerid);
+        
+        //require(requests[position].registryofficerid == officerid)
+        
+         //require(msg.sender == officerid);
+         
+        requests[position].registryofficerstatus = newstatus;
+    }
     
     function changestatusbyblro
     (

@@ -25,8 +25,6 @@ class LawyerDetails extends Component {
   async componentDidMount() {
     try{
       const addr = await factory.methods.getstoreaddress(this.props.address).call();
-      const list= await factory.methods.lawyeraddress(0).call();
-      console.log(list);
       console.log(addr);
       const lawyer= Lawyer(addr);
       const summary = await lawyer.methods.showdetails().call();
@@ -71,14 +69,41 @@ class LawyerDetails extends Component {
 
           {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
 
-          <br/>
-          <br/>
-          
-          <Link route={`/lawyer/${this.props.address}/requests`}>
+          <br/><br/>
+          <Link route={`/lawyer/${this.props.address}/showusers`}>
             <a>
-              <Button content="See Requests" primary />
+              <Button content="See All Users" primary />
             </a>
           </Link>
+
+          <br/><br/>
+          <Link route={`/lawyer/${this.props.address}/showregoff`}>
+            <a>
+              <Button content="See All Registry Officers" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
+          <Link route={`/lawyer/${this.props.address}/showblro`}>
+            <a>
+              <Button content="See All BLRO" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
+          <Link route={`/lawyer/${this.props.address}/pendingrequest`}>
+            <a>
+              <Button content="See Pending Requests" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
+          <Link route={`/lawyer/${this.props.address}/allrequest`}>
+            <a>
+              <Button content="See All Requests" primary />
+            </a>
+          </Link>
+
         </div>
       </Layout>
     );

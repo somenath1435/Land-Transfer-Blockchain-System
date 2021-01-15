@@ -108,7 +108,7 @@ contract Lawyer {
            landid: lanid,
            lawyerid: lawid,
            lawyerstatus: "Pending",
-           registryofficerstatus: "Pending",
+           registryofficerstatus: "Nil",
            blrostatus: "Nil",
            registryofficerid: 0x0000000000000000000000000000000000000000,
            blroid: 0x0000000000000000000000000000000000000000,
@@ -121,7 +121,7 @@ contract Lawyer {
            requests.push(newrequest);
     }
     
-     function changestatusbyregistryofficer
+     function approvebyregistryofficer
     (
         address lawyer,
         address officerid,
@@ -141,8 +141,29 @@ contract Lawyer {
         
         requests[position].registryofficerstatus = newstatus;
         requests[position].blroid = blroid;
+        requests[position].blrostatus="Pending";
     }
     
+     function rejectbyregistryofficer
+    (
+        address lawyer,
+        address officerid,
+        uint position,
+        string newstatus
+    )
+    public
+    {
+        //require(position < requestcount);
+        
+        // require(lawid == requests[position].lawyerid);
+        
+        //require(requests[position].registryofficerid == officerid)
+        
+        //require(msg.sender == officerid);
+        
+        requests[position].registryofficerstatus = newstatus;
+
+    }
     
     function changestatusbyblro
     (
@@ -165,6 +186,30 @@ contract Lawyer {
         //require(msg.sender == blroid);
         
         requests[position].blrostatus = newstatus;
+    }
+
+    function approve
+    (
+        address officerid,
+        uint position
+    )
+    public 
+    {
+        requests[position].ispending=0;
+        requests[position].lawyerstatus="Approved";
+        requests[position].registryofficerid=officerid;
+        requests[position].registryofficerstatus="Pending";
+        
+    }
+    
+    function reject
+    (
+        uint position
+    )
+    public
+    {
+        requests[position].ispending=0;
+        requests[position].lawyerstatus="Rejected";
     }
     
 }

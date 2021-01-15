@@ -10,7 +10,7 @@ import LawyerRow from "../../components/AllLawyersRow"
 class ShowLawyers extends Component {
 
   state={
-    lawyercount:0,
+    count:0,
     data: []
   }
 
@@ -22,7 +22,7 @@ class ShowLawyers extends Component {
   async componentDidMount(){
     try{
       const count=await factory.methods.lawyercount().call();
-      this.setState({lawyercount:count});
+      this.setState({count:count});
       let arr=[]
       for(let i=0;i<count;i++)
       {
@@ -50,7 +50,7 @@ class ShowLawyers extends Component {
       return (
         <LawyerRow
           key={index}
-          lawyerid={summary[3]}
+          id={summary[3]}
           fname={summary[0]}
           lname={summary[1]}
           phone={summary[2]}
@@ -66,7 +66,7 @@ class ShowLawyers extends Component {
     return (
       <Layout>
         <h1>All lawyers will be shown here!</h1>
-        <h1>There are currently {this.state.lawyercount} lawyers available</h1>
+        <h1>There are currently {this.state.count} lawyers available</h1>
 
         <Table>
           <Header>
