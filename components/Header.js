@@ -6,7 +6,7 @@ export default () => {
   return (
     <Menu style={{ marginTop: '10px' }}>
       <Link route="/">
-        <a className="item">Land Registry and Transfer</a>
+        <a className="item">Land Transfer System</a>
       </Link>
 
       <Menu.Menu position="right">
