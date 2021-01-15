@@ -70,6 +70,13 @@ class LawyerDetails extends Component {
           {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
 
           <br/><br/>
+          <Link route={`/lawyer/${this.props.address}/showusers`}>
+            <a>
+              <Button content="See All Users" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
           <Link route={`/lawyer/${this.props.address}/showregoff`}>
             <a>
               <Button content="See All Registry Officers" primary />

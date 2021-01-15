@@ -79,6 +79,13 @@ class UserDetails extends Component {
           {this.state.errorMessage && <Message error header="Oops!" content={this.state.errorMessage} />}
 
           <br/><br/>
+          <Link route={`/user/${this.props.add}/showusers`}>
+            <a>
+              <Button content="See All Users" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
           <Link route={`/user/${this.props.add}/showlawyers`}>
             <a>
               <Button content="See All Lawyers" primary />
