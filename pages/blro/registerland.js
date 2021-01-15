@@ -142,7 +142,7 @@ class RegisterLand extends Component {
 
           <Form.Group widths="equal">
             <Form.Field>
-              <label>Enter Area of Land</label>
+              <label>Enter Area of Land (in square metre)</label>
               <Input
                 value={this.state.areaofland}
                 required={true}

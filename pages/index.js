@@ -10,7 +10,7 @@ class HomePage extends Component {
     return (
       <Layout>
         <div>
-          <Segment placeholder color="black" size="massive" textAlign="center" raised>Welcome to Land Tranfer Blockchain System</Segment>
+          <Segment placeholder color="black" size="massive" textAlign="center" raised>Welcome to Land Transfer Blockchain System</Segment>
 
           <br />
           <br />

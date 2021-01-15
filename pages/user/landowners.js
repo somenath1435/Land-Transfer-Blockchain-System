@@ -50,7 +50,7 @@ class LandOwners extends Component {
       <Layout>
         <div>
           <h1>Land Owners will be shown here!</h1>
-          <h3>{this.state.count} Owners found for this land</h3>
+          <h3>{this.state.count} History of Owners found for this land</h3>
 
           {this.renderDetails()}
 
