@@ -83,17 +83,23 @@ contract BlroManager {
         }) ;
         
         lands.push(newland);
-        //ownerlist[landcount].push(ownerid1);
-        //ownerlistsize.push(1);
+        ownerlist[landcount].push(ownerid1);
+        ownerlistsize.push(1);
         landcount++;
         
         
     }
     
-    /*function showwoners (uint landid) public returns (address [] memory)
+    function showwoners (uint landid) public view returns (address [] memory)
     {
-        return ownerlist[landid];
-    }*/
+        address [] storage owners;
+        uint siz=ownerlistsize[landid];
+        for(uint i=0; i<siz; i++)
+        {
+            owners.push(ownerlist[landid][i]);
+        }
+        return owners;
+    }
     
     function transferland
     (
@@ -103,8 +109,8 @@ contract BlroManager {
     public
     {
         lands[landid].ownerid=buyerid;
-        //ownerlist[landid].push(buyerid);
-        //ownerlistsize[landid]++;
+        ownerlist[landid].push(buyerid);
+        ownerlistsize[landid]++;
     }
     
     

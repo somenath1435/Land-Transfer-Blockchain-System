@@ -7,6 +7,8 @@ contract UserManager {
     mapping (address => address) public usermanagermap;
     address public storeaddress;
     
+    //this array stores the list of address of users
+    address [] public  useraddress;
     function registeruser (
         string  firstname ,
         string  lastname ,
@@ -23,6 +25,7 @@ contract UserManager {
      checker[msg.sender]=true;
      storeaddress=address(newuser);
      usermanagermap[msg.sender]=storeaddress;
+     useraddress.push(eth);
      usercount++;
     }
     
