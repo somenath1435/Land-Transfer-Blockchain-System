@@ -110,6 +110,13 @@ class LandDetails extends Component {
           )}
 
           <br/><br/>
+          <Link route={`/user/${this.props.address}/alllands/${this.props.id}/landowners`}>
+            <a>
+              <Button content="See Owner History" primary />
+            </a>
+          </Link>
+
+          <br/><br/>
         </div>
       </Layout>
     );

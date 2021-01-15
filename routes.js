@@ -12,6 +12,7 @@ routes
   .add('/user/:address/alllands','/user/alllands')
   .add('/user/:address/mylands','/user/mylands')
   .add('/user/:address/alllands/:id','/user/landdetails')
+  .add('/user/:address/alllands/:id/landowners','/user/landowners')
   .add('/lawyer/:address','/lawyer/details')
   .add('/lawyer/:address/showusers','/lawyer/showusers')
   .add('/lawyer/:address/showregoff','/lawyer/showregoff')
