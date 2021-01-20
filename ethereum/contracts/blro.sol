@@ -52,6 +52,9 @@ contract BlroManager {
     address [][100] public ownerlist;
     uint [] public ownerlistsize;
     Land [] public lands;
+    //This array stores the status of the land that it is sellable or not
+    // 0 means not sellable 1 means sellable
+    uint [] public is_sellable;
     
     function registerland 
     (
@@ -86,6 +89,7 @@ contract BlroManager {
         ownerlist[landcount].push(ownerid1);
         ownerlistsize.push(1);
         landcount++;
+        is_sellable.push(0);
         
         
     }
@@ -111,6 +115,11 @@ contract BlroManager {
         lands[landid].ownerid=buyerid;
         ownerlist[landid].push(buyerid);
         ownerlistsize[landid]++;
+    }
+    //This function to change status of a particular land
+    function change_status_land(uint landid) public
+    {
+        is_sellable[landid]=1-is_sellable[landid];
     }
     
     
