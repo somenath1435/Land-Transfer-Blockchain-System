@@ -131,13 +131,11 @@ class LandDetails extends Component {
           )}
 
           <br/><br/>
-          {isOwner && (
-            <Link route={`/user/${this.props.address}/alllands/${this.props.id}/landowners`}>
-              <a>
-              <Button content="See Owner History" primary />
-              </a>
-            </Link>
-          )}
+          <Link route={`/user/${this.props.address}/alllands/${this.props.id}/landowners`}>
+            <a>
+            <Button content="See Owner History" primary />
+            </a>
+          </Link>
 
           {isOwner && this.state.isSellable==="0" && (
             <Button primary onClick={this.OnClicked} loading={this.state.isLoading}>
