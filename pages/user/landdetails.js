@@ -16,8 +16,10 @@ class LandDetails extends Component {
     areaofland: "",
     landmark: "",
     landid: "",
+    isSellable: "",
     blroid: "",
     errorMessage: "",
+    isLoading: false
   };
 
   static async getInitialProps(props) {
@@ -29,7 +31,9 @@ class LandDetails extends Component {
   async componentDidMount() {
     try{
       const land = await factory.methods.lands(this.props.id).call();
+      const issellable=  await factory.methods.is_sellable(this.props.id).call();
       console.log(land);
+      console.log(issellable);
 
       this.setState({
         landid:land[0],
@@ -41,7 +45,8 @@ class LandDetails extends Component {
         khaatanumber:land[6],
         areaofland:land[7],
         landmark:land[8],
-        blroid:land[9]
+        blroid:land[9],
+        isSellable:issellable
       });
     }catch(err){
       console.log(err);
@@ -97,7 +102,23 @@ class LandDetails extends Component {
     return <Card.Group items={items} itemsPerRow="2" />;
   }
 
+  OnClicked = async (e)=>{
+    e.preventDefault();
+    try{
+      this.setState({isLoading:true});
+      const accounts = await web3.eth.getAccounts();
+
+      await factory.methods.change_status_land(this.props.id).send({from:accounts[0]});
+      Router.pushRoute(`/user/${this.props.address}`);
+    }catch(err){
+      console.log(err);
+      this.setState({errorMessage:err.message});
+    }
+    this.setState({isLoading:false});
+  };
+
   render() {
+    const isOwner = (this.state.ownerid===this.props.address);
     return (
       <Layout>
         <div>
@@ -110,11 +131,25 @@ class LandDetails extends Component {
           )}
 
           <br/><br/>
-          <Link route={`/user/${this.props.address}/alllands/${this.props.id}/landowners`}>
-            <a>
+          {isOwner && (
+            <Link route={`/user/${this.props.address}/alllands/${this.props.id}/landowners`}>
+              <a>
               <Button content="See Owner History" primary />
-            </a>
-          </Link>
+              </a>
+            </Link>
+          )}
+
+          {isOwner && this.state.isSellable==="0" && (
+            <Button primary onClick={this.OnClicked} loading={this.state.isLoading}>
+              Make Land Sellable
+            </Button>
+          )}
+
+          {isOwner && this.state.isSellable==="1" && (
+            <Button primary onClick={this.OnClicked} loading={this.state.isLoading}>
+              Make Land Non-Sellable
+            </Button>
+          )}  
 
           <br/><br/>
         </div>
