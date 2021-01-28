@@ -20,14 +20,22 @@ class AllLands extends Component {
   async componentDidMount(){
     try{
       const count = await factory.methods.landcount().call();
-      this.setState({landcount:count});
-      let arr=[]
+      let arr=[];
+      let sellablecount=0;
       for(let i=0;i<count;i++)
       {
-        const land= await factory.methods.lands(i).call();
-        arr.push(land);
+        const isSellable= await factory.methods.is_sellable(i).call();
+        console.log(typeof isSellable);
+        console.log(isSellable);
+        if(isSellable==="1")
+        {
+          const land= await factory.methods.lands(i).call();
+          land.pindex=i;
+          arr.push(land);
+          sellablecount++;
+        }
       }
-      this.setState({lands:arr});
+      this.setState({lands:arr,landcount:sellablecount});
     }catch(err){
       console.log(err);
     }
@@ -39,7 +47,7 @@ class AllLands extends Component {
       return (
         <LandRows
           key={index}
-          id={index}
+          id={land.pindex}
           landid={land[0]}
           states={land[1]}
           city={land[2]}
@@ -56,9 +64,9 @@ class AllLands extends Component {
     return (
       <Layout>
         <div>
-          <h1>All Lands will be shown here!</h1>
+          <h1>All Sellable Lands will be shown here!</h1>
           <h2>
-            Total {this.state.landcount} Lands found
+            Total {this.state.landcount} Sellable Lands found
           </h2>
 
           <Table>

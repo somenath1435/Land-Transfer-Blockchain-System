@@ -122,7 +122,7 @@ class UserDetails extends Component {
           <br/><br/>
           <Link route={`/user/${this.props.add}/alllands`}>
             <a>
-              <Button content="View All Lands" primary />
+              <Button content="View All Sellable Lands" primary />
             </a>
           </Link>
           <Link route={`/user/${this.props.add}/mylands`}>
