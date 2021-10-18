@@ -3,8 +3,8 @@ const Web3 = require('web3');
 const compiledFactory = require('./build_Lawyer/LawyerManager.json');
 
 const provider = new HDWalletProvider(
-  'model basic scene left push agree summer fuel corn daughter boy inflict',
-  'https://rinkeby.infura.io/v3/74654fe0e2bf4e7c9fad25f8f417fdb4'
+  <insert metamask secret here>,
+  <insert infura key here>
 );
 const web3 = new Web3(provider);
 
