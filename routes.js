@@ -10,6 +10,7 @@ routes
   .add('/user/:address/newrequest','/user/newrequest')
   .add('/user/:address/allrequest','/user/allrequest')
   .add('/user/:address/alllands','/user/alllands')
+  .add('/user/:address/searchlands','/user/searchlands')
   .add('/user/:address/mylands','/user/mylands')
   .add('/user/:address/alllands/:id','/user/landdetails')
   .add('/user/:address/alllands/:id/landowners','/user/landowners')

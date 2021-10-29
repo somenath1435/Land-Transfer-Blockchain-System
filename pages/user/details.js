@@ -130,6 +130,11 @@ class UserDetails extends Component {
               <Button content="View My Lands" primary />
             </a>
           </Link>
+          <Link route={`/user/${this.props.add}/searchlands`}>
+            <a>
+              <Button content="Search Lands" primary />
+            </a>
+          </Link>
         </div>
       </Layout>
     );
