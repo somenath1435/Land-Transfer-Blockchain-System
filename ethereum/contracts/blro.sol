@@ -1,4 +1,4 @@
-pragma solidity ^0.4.19;
+pragma solidity >=0.4.17 <0.9.0;
 
 contract BlroManager {
     
@@ -47,46 +47,62 @@ contract BlroManager {
         uint areaofland;
         string landmark;
         address registeredbyblro;
+
+    }
+    
+    struct Land_Details {
+        string latitude;
+        string longitude;
+        bool is_disputed;
+        string last_transaction_date;
+        string type_of_land;
     }
     
     address [][100] public ownerlist;
     uint [] public ownerlistsize;
     Land [] public lands;
+    Land_Details [] public lands_details;
+    
     //This array stores the status of the land that it is sellable or not
     // 0 means not sellable 1 means sellable
     uint [] public is_sellable;
+    string [] public north;
+    string [] public south;
+    string [] public east;
+    string [] public west;
     
     function registerland 
     (
-        string state1,
-        string city1,
-        uint pincode1,
-        address ownerid1,
-        uint price1,
-        string khaatanumber1,
-        uint areaofland1,
-        string landmark1,
-        address registeredbyblro1
+        string _state,
+        string _city,
+        uint _pincode,
+        address _ownerid,
+        uint _price,
+        string _khaatanumber,
+        uint _areaofland,
+        string _landmark,
+        address _registeredbyblro
+       
     )
     public
     {
         Land memory newland = Land ({
            landid: landcount,
-           state: state1,
-           city: city1,
-           pincode: pincode1,
-           ownerid: ownerid1,
-           price: price1,
-           khaatanumber: khaatanumber1,
-           areaofland: areaofland1,
-           landmark: landmark1,
-           registeredbyblro: registeredbyblro1
+           state: _state,
+           city: _city,
+           pincode: _pincode,
+           ownerid: _ownerid,
+           price: _price,
+           khaatanumber: _khaatanumber,
+           areaofland: _areaofland,
+           landmark: _landmark,
+           registeredbyblro: _registeredbyblro
            
         
         }) ;
         
         lands.push(newland);
-        ownerlist[landcount].push(ownerid1);
+        ownerlist[landcount].push(_ownerid);
         ownerlistsize.push(1);
         landcount++;
         is_sellable.push(0);
@@ -94,27 +110,62 @@ contract BlroManager {
         
     }
     
+    function register_land_details
+    (
+        string _latitude,
+        string _longitude,
+        string _east_neighbour,
+        string _west_neighbour,
+        string _north_neighbour,
+        string _south_neighbour,
+        bool _is_disputed,
+        string _last_transaction_date,
+        string _type_of_land
+    )
+    public 
+    {
+        Land_Details memory newland = Land_Details ({
+        latitude: _latitude,
+        longitude: _longitude,
+        is_disputed: _is_disputed,
+        last_transaction_date: _last_transaction_date,
+        type_of_land: _type_of_land
+        
+        }) ;
+        lands_details.push(newland);
+        north.push(_north_neighbour);
+        south.push(_south_neighbour);
+        east.push(_east_neighbour);
+        west.push(_west_neighbour);
+    }
+    
     function showwoners (uint landid) public view returns (address [] memory)
     {
-        address [] storage owners;
+        return ownerlist[landid];
+        /*address [] storage owners;
         uint siz=ownerlistsize[landid];
         for(uint i=0; i<siz; i++)
         {
             owners.push(ownerlist[landid][i]);
         }
-        return owners;
+        return owners;*/
     }
     
     function transferland
     (
         uint landid,
-        address buyerid
+        address buyerid,
+        string _present_date,
+        uint current_price
     )
     public
     {
         lands[landid].ownerid=buyerid;
+        lands[landid].price = current_price;
         ownerlist[landid].push(buyerid);
+        lands_details[landid].last_transaction_date = _present_date;
         ownerlistsize[landid]++;
+        is_sellable[landid]=0;
     }
     //This function to change status of a particular land
     function change_status_land(uint landid) public
