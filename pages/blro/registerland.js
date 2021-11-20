@@ -15,6 +15,14 @@ class RegisterLand extends Component {
     khaatanumber: "",
     areaofland: "",
     landmark: "",
+    latitude: "",
+    longitude: "",
+    type_of_land: "",
+    north: "",
+    south: "",
+    east: "",
+    west: "",
+    last_transaction_date: "",
     errorMessage: "",
     loading: false,
   };
@@ -35,7 +43,8 @@ class RegisterLand extends Component {
 
       const accounts = await web3.eth.getAccounts();
       console.log("accounts[0] is " + accounts[0]);
-      await factory.methods.registerland(
+      await factory.methods
+        .registerland(
           this.state.states,
           this.state.city,
           this.state.pincode,
@@ -45,10 +54,24 @@ class RegisterLand extends Component {
           this.state.areaofland,
           this.state.landmark,
           this.props.address
-        ).send({ from: accounts[0] });
+        )
+        .send({ from: accounts[0] });
+
+      await factory.methods
+        .register_land_details(
+          this.state.latitude,
+          this.state.longitude,
+          this.state.east,
+          this.state.west,
+          this.state.north,
+          this.state.south,
+          false,
+          this.state.last_transaction_date,
+          this.state.type_of_land
+        )
+        .send({ from: accounts[0] });
 
       Router.pushRoute(`/blro/${this.props.address}`);
-      // Router.replaceRoute(`/campaigns/${this.props.address}`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
@@ -63,6 +86,14 @@ class RegisterLand extends Component {
       khaatanumber: "",
       areaofland: 0,
       landmark: "",
+      latitude: "",
+      longitude: "",
+      type_of_land: "",
+      north: "",
+      south: "",
+      east: "",
+      west: "",
+      last_transaction_date: "",
     });
   };
 
@@ -77,9 +108,7 @@ class RegisterLand extends Component {
               <Input
                 value={this.state.states}
                 required={true}
-                onChange={(event) =>
-                  this.setState({ states: event.target.value })
-                }
+                onChange={(event) => this.setState({ states: event.target.value })}
               />
             </Form.Field>
             <Form.Field>
@@ -87,9 +116,7 @@ class RegisterLand extends Component {
               <Input
                 value={this.state.city}
                 required={true}
-                onChange={(event) =>
-                  this.setState({ city: event.target.value })
-                }
+                onChange={(event) => this.setState({ city: event.target.value })}
               />
             </Form.Field>
           </Form.Group>
@@ -100,9 +127,7 @@ class RegisterLand extends Component {
               <Input
                 value={this.state.ownerid}
                 required={true}
-                onChange={(event) =>
-                  this.setState({ ownerid: event.target.value })
-                }
+                onChange={(event) => this.setState({ ownerid: event.target.value })}
               />
             </Form.Field>
             <Form.Field>
@@ -110,9 +135,7 @@ class RegisterLand extends Component {
               <Input
                 value={this.state.pincode}
                 required={true}
-                onChange={(event) =>
-                  this.setState({ pincode: event.target.value })
-                }
+                onChange={(event) => this.setState({ pincode: event.target.value })}
               />
             </Form.Field>
           </Form.Group>
@@ -123,9 +146,7 @@ class RegisterLand extends Component {
               <Input
                 value={this.state.price}
                 required={true}
-                onChange={(event) =>
-                  this.setState({ price: event.target.value })
-                }
+                onChange={(event) => this.setState({ price: event.target.value })}
               />
             </Form.Field>
             <Form.Field>
@@ -133,9 +154,7 @@ class RegisterLand extends Component {
               <Input
                 value={this.state.khaatanumber}
                 required={true}
-                onChange={(event) =>
-                  this.setState({ khaatanumber: event.target.value })
-                }
+                onChange={(event) => this.setState({ khaatanumber: event.target.value })}
               />
             </Form.Field>
           </Form.Group>
@@ -146,9 +165,7 @@ class RegisterLand extends Component {
               <Input
                 value={this.state.areaofland}
                 required={true}
-                onChange={(event) =>
-                  this.setState({ areaofland: event.target.value })
-                }
+                onChange={(event) => this.setState({ areaofland: event.target.value })}
               />
             </Form.Field>
             <Form.Field>
@@ -156,9 +173,83 @@ class RegisterLand extends Component {
               <Input
                 value={this.state.landmark}
                 required={true}
-                onChange={(event) =>
-                  this.setState({ landmark: event.target.value })
-                }
+                onChange={(event) => this.setState({ landmark: event.target.value })}
+              />
+            </Form.Field>
+          </Form.Group>
+
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Enter Latitude</label>
+              <Input
+                value={this.state.latitude}
+                required={true}
+                onChange={(event) => this.setState({ latitude: event.target.value })}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Enter Longitude</label>
+              <Input
+                value={this.state.longitude}
+                required={true}
+                onChange={(event) => this.setState({ longitude: event.target.value })}
+              />
+            </Form.Field>
+          </Form.Group>
+
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Enter Land (to the North)</label>
+              <Input
+                value={this.state.north}
+                required={true}
+                onChange={(event) => this.setState({ north: event.target.value })}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Enter Land (to the South)</label>
+              <Input
+                value={this.state.south}
+                required={true}
+                onChange={(event) => this.setState({ south: event.target.value })}
+              />
+            </Form.Field>
+          </Form.Group>
+
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Enter Land (to the East)</label>
+              <Input
+                value={this.state.east}
+                required={true}
+                onChange={(event) => this.setState({ east: event.target.value })}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Enter Land (to the West)</label>
+              <Input
+                value={this.state.west}
+                required={true}
+                onChange={(event) => this.setState({ west: event.target.value })}
+              />
+            </Form.Field>
+          </Form.Group>
+
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Enter Type of Land</label>
+              <Input
+                value={this.state.type_of_land}
+                required={true}
+                onChange={(event) => this.setState({ type_of_land: event.target.value })}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Enter Date (mm/dd/yyyy)</label>
+              <Input
+                value={this.state.last_transaction_date}
+                required={true}
+                onChange={(event) => this.setState({ last_transaction_date: event.target.value })}
               />
             </Form.Field>
           </Form.Group>
