@@ -10,12 +10,12 @@ class HomePage extends Component {
     return (
       <Layout>
         <div>
-          <Segment placeholder color="black" size="massive" textAlign="center" raised>Welcome to Land Transfer Blockchain System</Segment>
+          <Segment placeholder="true" color="black" size="massive" textAlign="center" raised>Welcome to Land Transfer Blockchain System</Segment>
 
           <br />
           <br />
 
-          <Segment placeholder color="grey">
+          <Segment placeholder="true" color="grey">
             <Header icon>
               Please register as User or Lawyer or Registry Officer or Blro
             </Header>
@@ -24,7 +24,7 @@ class HomePage extends Component {
             </Link>
           </Segment>
 
-          <Segment placeholder color="grey">
+          <Segment placeholder="true" color="grey">
             <Header icon>
               Already Registered? Please login as User or Lawyer or Registry Officer or Blro
             </Header>
