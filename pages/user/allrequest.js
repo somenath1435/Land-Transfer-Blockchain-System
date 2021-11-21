@@ -59,6 +59,7 @@ class AllRequest extends Component {
           <List.Item>Lawyer Status: {req[6]}</List.Item>
           <List.Item>Registry Offier Status: {req[7]}</List.Item>
           <List.Item>Blro Status: {req[8]}</List.Item>
+          <List.Item>Deed link: {req.deed_hash}</List.Item>
         </List>
       );
 
@@ -80,8 +81,7 @@ class AllRequest extends Component {
         <div>
           <h1>All requests will be shown here!</h1>
           <h1>
-            {this.state.requestcount} Requests found for User{" "}
-            {this.props.address}
+            {this.state.requestcount} Requests found for User {this.props.address}
           </h1>
 
           {this.displayRequests()}

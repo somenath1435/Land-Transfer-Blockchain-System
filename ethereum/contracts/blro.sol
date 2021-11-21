@@ -72,7 +72,7 @@ contract BlroManager
     string [] public south;
     string [] public east;
     string [] public west;
-    string [] registration_hash;
+    string [] public registration_hash;
     
     function registerland 
     (

@@ -31,6 +31,7 @@ class RequestDetails extends Component {
     rejectloading: false,
     approveloading: false,
     errorMessage: "",
+    url: "",
   };
 
   static async getInitialProps(props) {
@@ -45,6 +46,7 @@ class RequestDetails extends Component {
       console.log(addr);
       const blro = Blro(addr);
       const req = await blro.methods.requests(this.props.id).call();
+      const url = await blro.methods.deed_hash(this.props.id).call();
       console.log(req);
 
       this.setState({
@@ -60,6 +62,7 @@ class RequestDetails extends Component {
         lawyerposition: req[9],
         registryofficerposition: req[10],
         ispending: req[11],
+        url: url,
       });
     } catch (err) {
       console.log(err);
@@ -322,12 +325,23 @@ class RequestDetails extends Component {
     this.setState({ rejectloading: false });
   };
 
+  showProposal = (e) => {
+    e.preventDefault();
+    try {
+      window.open(this.state.url);
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
+    }
+  };
+
   render() {
     const isDisabled = this.state.ispending === "0";
     return (
       <Layout>
         <div>
           <h1>Request Details will be shown here!</h1>
+
+          <Button primary floated="right" onClick={this.showProposal} content="Show Land Transfer Deed" />
 
           {this.renderDetails()}
 

@@ -4,6 +4,7 @@ import Layout from "../../components/layoutlogout";
 import { Link, Router } from "../../routes";
 import web3 from "../../ethereum/web3";
 import factory from "../../ethereum/factory_blro";
+import { post } from "axios";
 
 class RegisterLand extends Component {
   state = {
@@ -23,6 +24,7 @@ class RegisterLand extends Component {
     east: "",
     west: "",
     last_transaction_date: "",
+    file: null,
     errorMessage: "",
     loading: false,
   };
@@ -41,6 +43,22 @@ class RegisterLand extends Component {
       //write
       console.log(this.state.states);
 
+      const url = "https://ipfs.infura.io:5001/api/v0/add";
+      const formData = new FormData();
+      formData.append("files", this.state.file);
+      const config = {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-type": "multipart/form-data",
+        },
+      };
+
+      const response = await post(url, formData, config);
+      const hash = response.data.Hash;
+      console.log(hash);
+      const link = `https://ipfs.io/ipfs/${hash}`;
+      console.log(link);
+
       const accounts = await web3.eth.getAccounts();
       console.log("accounts[0] is " + accounts[0]);
       await factory.methods
@@ -53,7 +71,8 @@ class RegisterLand extends Component {
           this.state.khaatanumber,
           this.state.areaofland,
           this.state.landmark,
-          this.props.address
+          this.props.address,
+          link
         )
         .send({ from: accounts[0] });
 
@@ -253,6 +272,16 @@ class RegisterLand extends Component {
               />
             </Form.Field>
           </Form.Group>
+
+          <Form.Field>
+            <label>Land Registration File to be added:</label>
+            <input
+              type="file"
+              name="file"
+              required={true}
+              onChange={(event) => this.setState({ file: event.target.files[0] })}
+            />
+          </Form.Field>
 
           <Message error header="Oops!" content={this.state.errorMessage} />
           <Button primary loading={this.state.loading}>
