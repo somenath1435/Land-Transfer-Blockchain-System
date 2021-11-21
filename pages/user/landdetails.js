@@ -30,6 +30,7 @@ class LandDetails extends Component {
     errorMessage: "",
     isLoading: false,
     marketValue: 0,
+    url: "",
   };
 
   static async getInitialProps(props) {
@@ -62,6 +63,8 @@ class LandDetails extends Component {
       const newPrice = await this.getNewMarketValue(pDate, cDate, currentPrice);
       console.log(newPrice);
 
+      const hash = await factory.methods.registration_hash(this.props.id).call();
+
       this.setState({
         landid: land[0],
         states: land[1],
@@ -84,6 +87,7 @@ class LandDetails extends Component {
         last_transaction_date: landdetails.last_transaction_date,
         is_disputed: landdetails.is_disputed,
         marketValue: newPrice,
+        url: hash,
       });
     } catch (err) {
       console.log(err);
@@ -272,6 +276,15 @@ class LandDetails extends Component {
     this.setState({ isLoading: false });
   };
 
+  showProposal = (e) => {
+    e.preventDefault();
+    try {
+      window.open(this.state.url);
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
+    }
+  };
+
   render() {
     const isOwner = this.state.ownerid === this.props.address;
     return (
@@ -307,6 +320,7 @@ class LandDetails extends Component {
 
           <br />
           <br />
+          {isOwner && <Button primary onClick={this.showProposal} content="Show Land Document" />}
         </div>
       </Layout>
     );

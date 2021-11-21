@@ -90,7 +90,7 @@ contract Registryofficer {
     }
     
      Requestdetails [] public requests;
-     string [] deed_hash;
+     string [] public deed_hash;
     
     uint public requestcount=0;
     

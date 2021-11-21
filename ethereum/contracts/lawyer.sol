@@ -91,7 +91,7 @@ contract Lawyer
     }
     
     Requestdetails [] public requests;
-    string [] deed_hash;
+    string [] public deed_hash;
     uint public requestcount=0;
     
      function createrequest
