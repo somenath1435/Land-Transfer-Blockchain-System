@@ -1,7 +1,7 @@
 pragma solidity ^0.4.19;
 
-contract RegistryofficerManager {
-    
+contract RegistryofficerManager 
+{
     uint public registryofficercount=0;
     mapping (address  => bool) public checker;
     mapping (address => address)public registryofficermanagermap;
@@ -9,13 +9,15 @@ contract RegistryofficerManager {
     //this array stores the list of address of registryofficers
     address [] public  registryofficeraddress;
     
-    function registerregistryofficer (
+    function registerregistryofficer 
+    (
         string  firstname ,
         string  lastname ,
         uint phone ,
         address eth, 
-        string govtid) 
-        public  
+        string govtid
+    ) 
+    public  
     {
      require(eth == msg.sender);
      require(!checker[msg.sender]);
@@ -28,14 +30,13 @@ contract RegistryofficerManager {
      registryofficercount++;
     }
     
-    function getstoreaddress (address eth) public view returns (address){
+    function getstoreaddress (address eth) public view returns (address)
+    {
         
         //require(eth == msg.sender);
         
         return registryofficermanagermap[eth];
     }
-    
-    
 }
 
 contract Registryofficer {
@@ -89,6 +90,7 @@ contract Registryofficer {
     }
     
      Requestdetails [] public requests;
+     string [] deed_hash;
     
     uint public requestcount=0;
     
@@ -101,7 +103,8 @@ contract Registryofficer {
         address officerid,
         uint buyerpos,
         uint sellerpos,
-        uint lawyerpos
+        uint lawyerpos,
+        string _deed_hash
     ) 
     public 
     {
@@ -120,7 +123,7 @@ contract Registryofficer {
            ispending: 1
            } );
            requestcount++;
-           
+           deed_hash.push(_deed_hash);
            requests.push(newrequest);
     }
     

@@ -1,7 +1,7 @@
 pragma solidity ^0.4.19;
 
-contract UserManager {
-    
+contract UserManager 
+{
     uint public usercount=0;
     mapping (address  => bool) public checker;
     mapping (address => address) public usermanagermap;
@@ -9,14 +9,16 @@ contract UserManager {
     
     //this array stores the list of address of users
     address [] public  useraddress;
-    function registeruser (
+    function registeruser 
+    (
         string  firstname ,
         string  lastname ,
         uint phone ,
         uint aadhar,
         address eth, 
-        uint bank) 
-        public  
+        uint bank
+    ) 
+    public  
     {
      require(eth == msg.sender);
      require(!checker[msg.sender]);
@@ -29,18 +31,17 @@ contract UserManager {
      usercount++;
     }
     
-    function getstoreaddress (address eth) public view returns (address){
+    function getstoreaddress (address eth) public view returns (address)
+    {
         
         //require(eth == msg.sender);
         
         return usermanagermap[eth];
     }
-    
-    
 }
 
-contract User {
-    
+contract User 
+{
     //This is the unique id for each user 
     address  public id ;
     uint public phonenum;
@@ -49,7 +50,6 @@ contract User {
     string public firstname;
     string public lastname;
    
-    
     function User
     (
         string  firnam, 
@@ -89,6 +89,7 @@ contract User {
         string lawyerstatus;
         string registryofficerstatus;
         string blrostatus;
+        string deed_hash;
     }
     
     Requestdetails [] public requests;
@@ -113,7 +114,8 @@ contract User {
            registryofficerstatus:"Nil",
            blrostatus: "Nil",
            registryofficerid: 0x0000000000000000000000000000000000000000,
-           blroid: 0x0000000000000000000000000000000000000000
+           blroid: 0x0000000000000000000000000000000000000000,
+           deed_hash: "Not Applicable"
            } );
            requestcount++;
            
@@ -125,7 +127,8 @@ contract User {
         address lawid,
         uint position,
         string newstatus,
-        address registryoffid
+        address registryoffid,
+        string _deed_hash
     )
     public
     {
@@ -137,6 +140,7 @@ contract User {
         requests[position].lawyerstatus = newstatus;
         requests[position].registryofficerid = registryoffid;
         requests[position].registryofficerstatus="Pending";
+        requests[position].deed_hash = _deed_hash;
     }
     
     function rejectbylawyer
