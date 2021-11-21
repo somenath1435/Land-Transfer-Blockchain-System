@@ -1,7 +1,7 @@
 pragma solidity >=0.4.17 <0.9.0;
 
-contract BlroManager {
-    
+contract BlroManager 
+{
     uint public blrocount=0;
     mapping (address  => bool) public checker;
     mapping (address => address)public blromanagermap;
@@ -9,13 +9,15 @@ contract BlroManager {
     //this array stores the list of address of blro
     address [] public  blroaddress;
     
-    function registerblroofficer (
+    function registerblroofficer 
+    (
         string  firstname ,
         string  lastname ,
         uint phone ,
         address eth, 
-        string govtid) 
-        public  
+        string govtid
+    ) 
+    public  
     {
      require(eth == msg.sender);
      require(!checker[msg.sender]);
@@ -28,8 +30,8 @@ contract BlroManager {
      blrocount++;
     }
     
-    function getstoreaddress (address eth) public view returns (address){
-        
+    function getstoreaddress (address eth) public view returns (address)
+    {
         //require(eth == msg.sender);
         
         return blromanagermap[eth];
@@ -70,6 +72,7 @@ contract BlroManager {
     string [] public south;
     string [] public east;
     string [] public west;
+    string [] registration_hash;
     
     function registerland 
     (
@@ -81,7 +84,8 @@ contract BlroManager {
         string _khaatanumber,
         uint _areaofland,
         string _landmark,
-        address _registeredbyblro
+        address _registeredbyblro,
+        string _registration_hash
        
     )
     public
@@ -97,7 +101,6 @@ contract BlroManager {
            areaofland: _areaofland,
            landmark: _landmark,
            registeredbyblro: _registeredbyblro
-           
         
         }) ;
         
@@ -106,8 +109,7 @@ contract BlroManager {
         ownerlistsize.push(1);
         landcount++;
         is_sellable.push(0);
-        
-        
+        registration_hash.push(_registration_hash);
     }
     
     function register_land_details
@@ -172,12 +174,11 @@ contract BlroManager {
     {
         is_sellable[landid]=1-is_sellable[landid];
     }
-    
-    
+        
 }
 
-contract Blro {
-    
+contract Blro 
+{
     //This is the unique id for each user 
     address  public id ;
     uint public phonenum;
@@ -227,6 +228,7 @@ contract Blro {
     }
     
      Requestdetails [] public requests;
+     string [] public deed_hash;
     
     uint public requestcount=0;
     
@@ -241,11 +243,13 @@ contract Blro {
         uint buyerpos,
         uint sellerpos,
         uint lawyerpos,
-        uint registryofficerpos
+        uint registryofficerpos,
+        string _deed_hash
     ) 
     public 
     {
-        Requestdetails memory newrequest =  Requestdetails({
+        Requestdetails memory newrequest =  Requestdetails
+        ({
            buyerid: buyid,
            sellerid: sellid,
            landid: lanid,
@@ -258,9 +262,9 @@ contract Blro {
            lawyerposition: lawyerpos,
            registryofficerposition: registryofficerpos,
            ispending: 1
-           } );
+         });
            requestcount++;
-           
+           deed_hash.push(_deed_hash);
            requests.push(newrequest);
     }
     
@@ -286,7 +290,5 @@ contract Blro {
         requests[position].ispending=0;
         requests[position].blrostatus="Rejected";
     }
-    
-   
     
 }

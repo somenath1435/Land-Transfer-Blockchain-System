@@ -1,20 +1,22 @@
 pragma solidity ^0.4.19;
 
-contract LawyerManager {
-    
+contract LawyerManager 
+{
     uint public lawyercount=0;
     mapping (address  => bool) public checker;
     mapping (address => address)public lawyermanagermap;
     address public storeaddress;
     //this array stores the list of address of lawyers
     address [] public  lawyeraddress;
-    function registerlawyer (
+    function registerlawyer 
+    (
         string  firstname ,
         string  lastname ,
         uint phone ,
         address eth, 
-        string govtid) 
-        public  
+        string govtid
+    ) 
+    public  
     {
      require(eth == msg.sender);
      require(!checker[msg.sender]);
@@ -27,17 +29,18 @@ contract LawyerManager {
      lawyercount++;
     }
     
-    function getstoreaddress (address eth) public view returns (address){
+    function getstoreaddress (address eth) public view returns (address)
+    {
         
         //require(eth == msg.sender);
         
         return lawyermanagermap[eth];
     }
     
-    
 }
 
-contract Lawyer {
+contract Lawyer 
+{
     
     //This is the unique id for each user 
     address  public id ;
@@ -87,8 +90,8 @@ contract Lawyer {
         uint ispending;
     }
     
-     Requestdetails [] public requests;
-    
+    Requestdetails [] public requests;
+    string [] deed_hash;
     uint public requestcount=0;
     
      function createrequest
@@ -119,6 +122,7 @@ contract Lawyer {
            requestcount++;
            
            requests.push(newrequest);
+           deed_hash.push("Not Applicable");
     }
     
      function approvebyregistryofficer
@@ -191,7 +195,8 @@ contract Lawyer {
     function approve
     (
         address officerid,
-        uint position
+        uint position,
+        string _deed_hash
     )
     public 
     {
@@ -199,7 +204,7 @@ contract Lawyer {
         requests[position].lawyerstatus="Approved";
         requests[position].registryofficerid=officerid;
         requests[position].registryofficerstatus="Pending";
-        
+        deed_hash[position] = _deed_hash;
     }
     
     function reject
