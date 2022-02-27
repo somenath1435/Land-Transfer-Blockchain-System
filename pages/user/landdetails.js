@@ -31,6 +31,7 @@ class LandDetails extends Component {
     isLoading: false,
     marketValue: 0,
     url: "",
+    acc0: "",
   };
 
   static async getInitialProps(props) {
@@ -41,6 +42,7 @@ class LandDetails extends Component {
 
   async componentDidMount() {
     try {
+      const accounts = await web3.eth.getAccounts();
       const land = await factory.methods.lands(this.props.id).call();
       const issellable = await factory.methods.is_sellable(this.props.id).call();
       console.log(land);
@@ -88,6 +90,7 @@ class LandDetails extends Component {
         is_disputed: landdetails.is_disputed,
         marketValue: newPrice,
         url: hash,
+        acc0: accounts[0],
       });
     } catch (err) {
       console.log(err);
@@ -286,7 +289,7 @@ class LandDetails extends Component {
   };
 
   render() {
-    const isOwner = this.state.ownerid === this.props.address;
+    const isOwner = this.state.ownerid === this.props.address && this.state.ownerid === this.state.acc0;
     return (
       <Layout>
         <div>

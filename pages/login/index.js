@@ -31,6 +31,12 @@ class Login extends Component {
             <Button content="Login BLRO" primary></Button>
           </a>
         </Link>
+
+        <Link route="/login/admin">
+          <a>
+            <Button content="Login Admin" primary></Button>
+          </a>
+        </Link>
       </Layout>
     );
   }

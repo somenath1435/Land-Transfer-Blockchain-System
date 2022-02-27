@@ -33,6 +33,9 @@ routes
   .add('/blro/:address/pendingrequest','/blro/pendingrequest')
   .add('/blro/:address/allrequest/:id','/blro/requestdetails')
   .add('/blro/:address/registerland','/blro/registerland')
+  .add('/admin/:address','/admin/details')
+  .add('/admin/:address/searchlands','/admin/searchlands')
+  .add('/admin/:address/searchuser','/admin/searchuser')
   .add('/register', '/register')
   .add('/login','/login');
 
