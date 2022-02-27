@@ -31,6 +31,12 @@ class Register extends Component {
             <Button content="Register Blro" icon="add circle" primary />
           </a>
         </Link>
+
+        <Link route="/register/admin">
+          <a>
+            <Button content="Register Admin" icon="add circle" primary />
+          </a>
+        </Link>
       </Layout>
     );
   }
