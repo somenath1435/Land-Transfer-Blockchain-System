@@ -4,4 +4,5 @@ ethereum/deploy_user.js
 ethereum/deploy_lawyer.js
 ethereum/deploy_registryofficer.js
 ethereum/deploy_blro.js
+ethereum/deploy_superAdmin.js
 ethereum/web3.js
