@@ -3,7 +3,7 @@ import CampaignFactory from './build_blro/BlroManager.json';
 
 const instance = new web3.eth.Contract(
   JSON.parse(CampaignFactory.interface),
-  '0x46b70269CFD6976942817aef65E7D413987D1673'
+  '0xb41a9Ab0F6dB983c769E13498B3F40786059117C'
 );
 
 export default instance;
