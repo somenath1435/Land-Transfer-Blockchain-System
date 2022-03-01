@@ -38,6 +38,8 @@ contract BlroManager
     }
     
     uint public landcount=0;
+    //Array to differentiate between active and non active lands
+    uint [] public is_active;
     struct Land {
         uint landid;
         string state;
@@ -60,6 +62,7 @@ contract BlroManager
         string type_of_land;
     }
     
+    
     address [][100] public ownerlist;
     uint [] public ownerlistsize;
     Land [] public lands;
@@ -73,6 +76,7 @@ contract BlroManager
     string [] public east;
     string [] public west;
     string [] public registration_hash;
+    uint [] public parent_land;
     
     function registerland 
     (
@@ -103,15 +107,56 @@ contract BlroManager
            registeredbyblro: _registeredbyblro
         
         }) ;
+        parent_land.push(landcount);
+        lands.push(newland);
+        ownerlist[landcount].push(_ownerid);
+        ownerlistsize.push(1);
+        landcount++;
+        is_sellable.push(0);
+        is_active.push(1);
+        registration_hash.push(_registration_hash);
+    }
+    
+    function register_partial_land 
+    (
+        string _state,
+        string _city,
+        uint _pincode,
+        address _ownerid,
+        uint _price,
+        string _khaatanumber,
+        uint _areaofland,
+        string _landmark,
+        address _registeredbyblro,
+        uint parent_land_id
+       
+    )
+    public
+    {
+        Land memory newland = Land ({
+           landid: landcount*10000,
+           state: _state,
+           city: _city,
+           pincode: _pincode,
+           ownerid: _ownerid,
+           price: _price,
+           khaatanumber: _khaatanumber,
+           areaofland: _areaofland,
+           landmark: _landmark,
+           registeredbyblro: _registeredbyblro
+        
+        }) ;
         
         lands.push(newland);
         ownerlist[landcount].push(_ownerid);
         ownerlistsize.push(1);
         landcount++;
         is_sellable.push(0);
-        registration_hash.push(_registration_hash);
+        parent_land.push(parent_land_id);
+        is_active.push(0);
+        registration_hash.push("0x000000000000000");
     }
-    
+
     function register_land_details
     (
         string _latitude,
@@ -144,30 +189,32 @@ contract BlroManager
     function showwoners (uint landid) public view returns (address [] memory)
     {
         return ownerlist[landid];
-        /*address [] storage owners;
-        uint siz=ownerlistsize[landid];
-        for(uint i=0; i<siz; i++)
-        {
-            owners.push(ownerlist[landid][i]);
-        }
-        return owners;*/
     }
     
     function transferland
     (
-        uint landid,
+        uint _landid,
         address buyerid,
         string _present_date,
         uint current_price
     )
     public
     {
-        lands[landid].ownerid=buyerid;
-        lands[landid].price = current_price;
-        ownerlist[landid].push(buyerid);
-        lands_details[landid].last_transaction_date = _present_date;
-        ownerlistsize[landid]++;
-        is_sellable[landid]=0;
+        lands[_landid].ownerid=buyerid;
+        lands[_landid].price = current_price;
+        ownerlist[_landid].push(buyerid);
+        lands_details[_landid].last_transaction_date = _present_date;
+        ownerlistsize[_landid]++;
+        is_sellable[_landid]=0;
+        
+        //Case when partial land is being transfeered
+        if(lands[_landid].landid != _landid)
+        {
+            is_active[_landid]=1;
+            lands[_landid].landid= _landid;
+            lands[_landid].registeredbyblro = msg.sender;
+        }
+        lands[_landid].landid= _landid;
     }
     //This function to change status of a particular land
     function change_status_land(uint landid) public
