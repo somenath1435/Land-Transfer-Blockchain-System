@@ -38,6 +38,8 @@ contract BlroManager
     }
     
     uint public landcount=0;
+    //Array to differentiate between partial and full lands
+    uint [] public is_partial;
     //Array to differentiate between active and non active lands
     uint [] public is_active;
     struct Land {
@@ -114,6 +116,7 @@ contract BlroManager
         landcount++;
         is_sellable.push(0);
         is_active.push(1);
+        is_partial.push(0);
         registration_hash.push(_registration_hash);
     }
     
@@ -134,7 +137,7 @@ contract BlroManager
     public
     {
         Land memory newland = Land ({
-           landid: landcount*10000,
+           landid: landcount,
            state: _state,
            city: _city,
            pincode: _pincode,
@@ -154,6 +157,7 @@ contract BlroManager
         is_sellable.push(0);
         parent_land.push(parent_land_id);
         is_active.push(0);
+        is_partial.push(1);
         registration_hash.push("0x000000000000000");
     }
 
@@ -208,13 +212,12 @@ contract BlroManager
         is_sellable[_landid]=0;
         
         //Case when partial land is being transfeered
-        if(lands[_landid].landid != _landid)
+        if(is_partial[_landid]==1)
         {
             is_active[_landid]=1;
-            lands[_landid].landid= _landid;
+            is_partial[_landid]=0;
             lands[_landid].registeredbyblro = msg.sender;
         }
-        lands[_landid].landid= _landid;
     }
     //This function to change status of a particular land
     function change_status_land(uint landid) public
