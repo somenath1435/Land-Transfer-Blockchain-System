@@ -18,9 +18,13 @@ class Admin extends Component {
     this.setState({ loading: true, errorMessage: "" });
 
     try {
+      console.log(web3);
+      console.log(web3.eth);
+      console.log(ethereum);
       //write
       console.log(this.state.ethaddress);
       const accounts = await web3.eth.getAccounts();
+      // const accounts = await ethereum.request({ method: "eth_accounts" });
       console.log("accounts[0] is "+accounts[0]);
       if(this.state.ethaddress!==accounts[0]) throw Error("Input Ethereum address is different from Metamask account address");
       const checker = await factory.methods.checker(this.state.ethaddress).call();

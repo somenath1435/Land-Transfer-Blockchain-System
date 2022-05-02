@@ -13,26 +13,32 @@ class UserDetails extends Component {
     adhaar: "",
     bankcif: "",
     eth: "",
-    acc0: "",
     errorMessage: "",
+    isOwner: false,
   };
 
   static async getInitialProps(props) {
     //call api
-    const add = props.query.address;
-    return { add };
+    const add = props.query.address.toLowerCase();
+    let src;
+    src = props.query.src;
+    if (src === undefined) src = "nil";
+    return { add, src };
   }
 
   async componentDidMount() {
     try {
-      console.log(web3.eth);
-      const accounts = await ethereum.request({ method: "eth_accounts" });
-      console.log(accounts[0]);
+      // console.log(web3.eth);
       // const accounts = await web3.eth.getAccounts();
+      // const accounts = await ethereum.request({ method: "eth_accounts" });
+      // const acc0 = accounts[0].toLowerCase();
       // console.log(accounts);
+      let isOwner = false;
+      const checker = await factory.methods.checker(this.props.add).call();
+      if (checker == true) isOwner = true;
       const addr = await factory.methods.getstoreaddress(this.props.add).call();
 
-      console.log(addr);
+      // console.log(addr);
       const user1 = User1(addr);
       const summary = await user1.methods.showdetails().call();
       console.log(summary);
@@ -44,7 +50,7 @@ class UserDetails extends Component {
         adhaar: summary[3],
         eth: summary[4],
         bankcif: summary[5],
-        // acc0: accounts[0],
+        isOwner: isOwner,
       });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -80,7 +86,11 @@ class UserDetails extends Component {
   }
 
   render() {
-    const isAdmin = this.props.add !== this.state.acc0;
+    // const isAdmin = this.props.add !== this.state.acc0;
+    const isOwner = this.state.isOwner;
+    console.log("src= " + this.props.src);
+    const isAdmin = this.props.src === "admin";
+    console.log(isAdmin);
     return (
       <Layout>
         <div>
@@ -92,7 +102,7 @@ class UserDetails extends Component {
 
           <br />
           <br />
-          {!isAdmin && (
+          {isOwner && !isAdmin && (
             <Link route={`/user/${this.props.add}/showusers`}>
               <a>
                 <Button content="See All Users" primary />
@@ -100,9 +110,7 @@ class UserDetails extends Component {
             </Link>
           )}
 
-          <br />
-          <br />
-          {!isAdmin && (
+          {isOwner && !isAdmin && (
             <Link route={`/user/${this.props.add}/showlawyers`}>
               <a>
                 <Button content="See All Lawyers" primary />
@@ -110,9 +118,7 @@ class UserDetails extends Component {
             </Link>
           )}
 
-          <br />
-          <br />
-          {!isAdmin && (
+          {isOwner && !isAdmin && (
             <Link route={`/user/${this.props.add}/showregoff`}>
               <a>
                 <Button content="See All Registry Officers" primary />
@@ -120,9 +126,7 @@ class UserDetails extends Component {
             </Link>
           )}
 
-          <br />
-          <br />
-          {!isAdmin && (
+          {isOwner && !isAdmin && (
             <Link route={`/user/${this.props.add}/showblro`}>
               <a>
                 <Button content="See All BLRO" primary />
@@ -138,9 +142,7 @@ class UserDetails extends Component {
             </a>
           </Link>
 
-          <br />
-          <br />
-          {!isAdmin && (
+          {isOwner && !isAdmin && (
             <Link route={`/user/${this.props.add}/newrequest`}>
               <a>
                 <Button content="Make New Request" primary />
@@ -149,7 +151,7 @@ class UserDetails extends Component {
           )}
           <br />
           <br />
-          {!isAdmin && (
+          {isOwner && !isAdmin && (
             <Link route={`/user/${this.props.add}/alllands`}>
               <a>
                 <Button content="View All Sellable Lands" primary />
@@ -161,10 +163,18 @@ class UserDetails extends Component {
               <Button content="View My Lands" primary />
             </a>
           </Link>
-          {!isAdmin && (
+          {isOwner && !isAdmin && (
             <Link route={`/user/${this.props.add}/searchlands`}>
               <a>
                 <Button content="Search Lands" primary />
+              </a>
+            </Link>
+          )}
+
+          {isOwner && !isAdmin && (
+            <Link route={`/user/${this.props.add}/newpartialrequest`}>
+              <a>
+                <Button content="Request Partial Land Sale" primary />
               </a>
             </Link>
           )}

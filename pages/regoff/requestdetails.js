@@ -130,6 +130,7 @@ class RequestDetails extends Component {
         const blro = Blro(blroadd);
 
         const accounts = await web3.eth.getAccounts();
+        // const accounts = await ethereum.request({ method: "eth_accounts" });
         console.log("accounts[0] is " + accounts[0]);
         console.log("props id is " + this.props.id);
 
@@ -203,6 +204,7 @@ class RequestDetails extends Component {
       const regoff = RegOff(regoffadd);
 
       const accounts = await web3.eth.getAccounts();
+      // const accounts = await ethereum.request({ method: "eth_accounts" });
       console.log("accounts[0] is " + accounts[0]);
 
       await buyer.methods

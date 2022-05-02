@@ -30,6 +30,7 @@ class LandDetails extends Component {
     errorMessage: "",
     isLoading: false,
     marketValue: 0,
+    pid: 0,
     url: "",
     acc0: "",
   };
@@ -43,13 +44,18 @@ class LandDetails extends Component {
   async componentDidMount() {
     try {
       const accounts = await web3.eth.getAccounts();
+      // const accounts = await ethereum.request({ method: "eth_accounts" });
       const land = await factory.methods.lands(this.props.id).call();
       const issellable = await factory.methods.is_sellable(this.props.id).call();
-      console.log(land);
-      console.log(issellable);
+      const isPartial = await factory.methods.is_partial(this.props.id).call();
+      console.log("isPartial: " + isPartial);
+      // console.log(parent);
+      // console.log(land);
+      // console.log(issellable);
 
       const landdetails = await factory.methods.lands_details(this.props.id).call();
-      console.log(landdetails);
+      const pid = await factory.methods.parent_land(this.props.id).call();
+      // console.log(landdetails);
 
       const north = await factory.methods.north(this.props.id).call();
       const south = await factory.methods.south(this.props.id).call();
@@ -90,6 +96,7 @@ class LandDetails extends Component {
         is_disputed: landdetails.is_disputed,
         marketValue: newPrice,
         url: hash,
+        pid: pid,
         acc0: accounts[0],
       });
     } catch (err) {
@@ -209,6 +216,10 @@ class LandDetails extends Component {
         header: "Registered by BLRO ID",
         description: this.state.blroid,
       },
+      {
+        header: "Parent Land ID",
+        description: this.state.pid,
+      },
     ];
 
     return <Card.Group items={items} itemsPerRow="2" />;
@@ -269,6 +280,7 @@ class LandDetails extends Component {
     try {
       this.setState({ isLoading: true });
       const accounts = await web3.eth.getAccounts();
+      // const accounts = await ethereum.request({ method: "eth_accounts" });
 
       await factory.methods.change_status_land(this.props.id).send({ from: accounts[0] });
       Router.pushRoute(`/user/${this.props.address}`);
@@ -306,6 +318,12 @@ class LandDetails extends Component {
           <Link route={`/user/${this.props.address}/alllands/${this.props.id}/landowners`}>
             <a>
               <Button content="See Owner History" primary />
+            </a>
+          </Link>
+
+          <Link route={`/user/${this.props.address}/alllands/${this.props.id}/splithistory`}>
+            <a>
+              <Button content="See Split History" primary />
             </a>
           </Link>
 
