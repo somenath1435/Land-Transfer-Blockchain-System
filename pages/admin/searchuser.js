@@ -21,11 +21,12 @@ class SearchUser extends Component {
       //write
       console.log(this.state.ethaddress);
       const accounts = await web3.eth.getAccounts();
+      // const accounts = await ethereum.request({ method: "eth_accounts" });
       console.log("accounts[0] is "+accounts[0]);
       const checker = await factory.methods.checker(this.state.ethaddress).call();
       if(checker==false) throw Error("This Address is not found");
 
-      Router.replaceRoute(`/user/${this.state.ethaddress}`);
+      Router.replaceRoute(`/user/${this.state.ethaddress}?src=admin`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }

@@ -37,6 +37,7 @@ class NewRequest extends Component {
     try {
 
       const accounts = await web3.eth.getAccounts();
+      // const accounts = await ethereum.request({ method: "eth_accounts" });
       console.log("accounts[0] is "+accounts[0]);
       const st=this.state;
       

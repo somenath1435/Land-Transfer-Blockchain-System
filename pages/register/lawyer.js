@@ -30,6 +30,7 @@ class Lawyer extends Component {
       console.log(this.state.govtid);
 
       const accounts = await web3.eth.getAccounts();
+      // const accounts = await ethereum.request({ method: "eth_accounts" });
       console.log("accounts[0] is "+accounts[0]);
       const st=this.state;
       await factory.methods.registerlawyer(st.firstname,st.lastname,st.phone,st.ethaddress,st.govtid)
